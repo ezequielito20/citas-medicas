@@ -10,10 +10,10 @@ use App\Http\Controllers\AdminController;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // rutas para el admin
-Route::get('/admin', [AdminController::class, 'index'])
+Route::get('/', [AdminController::class, 'index'])
     ->name('admin.index')
     ->middleware('auth')
     ;
