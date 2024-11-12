@@ -18,13 +18,19 @@ Route::get('/', [AdminController::class, 'index'])
     ->name('admin.index')
     ->middleware('auth');
 
-    // rutas para el admin - users
-Route::get('/usuarios', [UserController::class, 'index'])
+// rutas para el admin - users
+Route::get('/users', [UserController::class, 'index'])
     ->name('admin.users.index')
     ->middleware('auth');
-    
+
+Route::get('/users/create', [UserController::class, 'create'])
+    ->name('admin.users.create')
+    ->middleware('auth');
+
+Route::post('/users/create', [UserController::class, 'store'])
+    ->name('admin.users.store')
+    ->middleware('auth');
 
 
 
 Auth::routes();
-

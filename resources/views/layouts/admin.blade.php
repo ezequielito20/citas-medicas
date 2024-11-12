@@ -93,16 +93,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link ">
+                                {{-- <li class="nav-item">
+                                    <a href="{{url('users/create')}}" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
+                                        <p>Creación de Usuarios</p>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{url('users')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
+                                        <p>Listado de Usuarios</p>
                                     </a>
                                 </li>
                             </ul>
@@ -145,7 +145,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            <strong>Copyright &copy; 2024-actualidad <a href="#">scriping</a>.</strong> All rights
             reserved.
         </footer>
     </div>

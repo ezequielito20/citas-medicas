@@ -2,22 +2,58 @@
 @section('title', 'Usuarios')
 
 @section('content')
-<div class="row">
-    <h1>Listado de Usuarios</h1>
-</div>
-<hr>
-<div class="row">
-    @foreach ($users as $user)
-        <div class="col-md-4 ">
-            <div class="card">
-                <div class="card-body" style="background-color: #aafff4;">
-                    <h5 class="card-title">{{ $user->name }}</h5>
-                    <p class="card-text">{{ $user->email }}</p>
-                </div>
+    <div class="row">
+        <h1>Listado de Usuarios</h1>
+    </div>
+    <hr>
+
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Usuarios Registrados</h3>
+
+            <div class="card-tools">
+                <a href="{{ url('users/create') }}" class="btn btn-primary">
+                    Registrar Nuevo
+                </a>
             </div>
         </div>
-        
-    @endforeach
-</div>
+        <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            <table class="table table-bordered table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col" style="text-align: center;">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Aciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $cont = 1;
+                    @endphp
+                    @foreach ($users as $user)
+                        <tr>
+                            <th scope="row" style="text-align: center;">{{ $cont++ }}</th>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                ver / editar / eliminar
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
 
 @endsection()
