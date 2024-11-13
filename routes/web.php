@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\AdminController;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // rutas para el admin
 Route::get('/', [AdminController::class, 'index'])
@@ -45,6 +46,10 @@ Route::put('/users/{id}', [UserController::class, 'update'])
 
 Route::get('/users/{id}/delete', [UserController::class, 'destroy'])
     ->name('admin.users.destroy')
+    ->middleware('auth');
+
+Route::get('/logout', [AdminController::class, 'logout'])
+    ->name('logout')
     ->middleware('auth');
 
 Auth::routes();
