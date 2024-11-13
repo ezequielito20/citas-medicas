@@ -31,6 +31,16 @@ Route::post('/users/create', [UserController::class, 'store'])
     ->name('admin.users.store')
     ->middleware('auth');
 
+Route::get('/users/{id}', [UserController::class, 'show'])
+    ->name('admin.users.show')
+    ->middleware('auth');
 
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])
+    ->name('admin.users.edit')
+    ->middleware('auth');
+
+Route::put('/users/{id}', [UserController::class, 'update'])
+    ->name('admin.users.update')
+    ->middleware('auth');
 
 Auth::routes();

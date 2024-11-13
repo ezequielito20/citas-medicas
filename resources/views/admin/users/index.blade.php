@@ -39,10 +39,13 @@
                             <td>{{ $user->email }}</td>
                             <td style="text-align: center;">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></button>
-                                    <button type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></button>
-                                    <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
-                                  </div>
+                                    <a href="{{ url('users/'.$user->id) }}" class="btn btn-info"><i
+                                            class="bi bi-eye"></i></a>
+                                    <a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-success btn-sm"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <button type="button" class="btn btn-danger btn-sm"><i
+                                            class="bi bi-trash"></i></button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
