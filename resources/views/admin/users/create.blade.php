@@ -19,6 +19,18 @@
             <h3 class="card-title">Crear Usuario</h3>
         </div>
         <div class="card-body">
+            @if ($message = Session::get('error'))
+                <h2>hola</h2>
+                {{-- <script>
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "{{$message}}",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                </script> --}}
+            @endif
             <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
                 <div class="form-group">

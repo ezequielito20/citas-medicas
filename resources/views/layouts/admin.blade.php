@@ -14,12 +14,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
     <!-- boostrap icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -33,15 +36,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>
                 </li>
-                
+
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{url('/')}}" class="nav-link">Reserva de Citas Médicas</a>
+                    <a href="{{ url('/') }}" class="nav-link">Reserva de Citas Médicas</a>
                 </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                
+
 
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -49,8 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"
-                        role="button">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
@@ -61,9 +63,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{asset('index3.html')}}" class="brand-link">
-                <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: .8">
+            <a href="{{ asset('index3.html') }}" class="brand-link">
+                <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+                    class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">Citas Médicas</span>
             </a>
 
@@ -71,13 +73,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    
+
                     <div class="info">
                         <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
-                
+
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -100,7 +102,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li> --}}
                                 <li class="nav-item">
-                                    <a href="{{url('users')}}" class="nav-link">
+                                    <a href="{{ url('users') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Listado de Usuarios</p>
                                     </a>
@@ -121,6 +123,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!-- /.sidebar -->
         </aside>
+
+        @if (( ($message = Session::get('message')) && ($icons = Session::get('icons'))))
+            <script>
+                Swal.fire({
+                    position: "center",
+                    icon: "{{ $icons }}",
+                    title: "{{ $message }}",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </script>
+        @endif
 
         <div class="content-wrapper">
             <div class="container">
@@ -154,11 +168,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
-    <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 </body>
 
 </html>

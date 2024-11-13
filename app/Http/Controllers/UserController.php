@@ -52,10 +52,14 @@ class UserController extends Controller
             ]);
     
             // Redirigir con mensaje de éxito
-            return redirect()->route('admin.users.index')->with('success', 'Usuario creado correctamente.');
+            return redirect()->route('admin.users.index')
+                ->with('message', 'Usuario creado correctamente.')
+                ->with('icons', 'success');
         } catch (\Exception $e) {
             // Si ocurre un error, redirigir con mensaje de error
-            return redirect()->route('admin.users.create')->with('error', 'Hubo un problema al crear el usuario.');
+            return redirect()->route('admin.users.create')
+            ->with('message', 'Hubo un problema al crear el usuario.')
+            ->with('icons', 'error');
         }
     }
 }
