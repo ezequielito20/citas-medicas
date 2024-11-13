@@ -43,4 +43,8 @@ Route::put('/users/{id}', [UserController::class, 'update'])
     ->name('admin.users.update')
     ->middleware('auth');
 
+Route::get('/users/{id}/delete', [UserController::class, 'destroy'])
+    ->name('admin.users.destroy')
+    ->middleware('auth');
+
 Auth::routes();

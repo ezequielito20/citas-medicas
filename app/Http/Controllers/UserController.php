@@ -107,4 +107,13 @@ class UserController extends Controller
             ->with('message', 'Usuario actualizado correctamente.')
             ->with('icons', 'success');
     }
+
+    public function destroy($id){
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.users.index')
+        ->with('message', 'Usuario eliminado correctamente.')
+        ->with('icons', 'success');
+        
+    }
 }
