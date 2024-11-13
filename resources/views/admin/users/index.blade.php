@@ -22,9 +22,9 @@
                 <thead>
                     <tr>
                         <th scope="col" style="text-align: center;">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Aciones</th>
+                        <th scope="col" style="text-align: center;">Name</th>
+                        <th scope="col" style="text-align: center;">Email</th>
+                        <th scope="col" style="text-align: center;">Aciones</th>
 
                     </tr>
                 </thead>
@@ -37,8 +37,12 @@
                             <th scope="row" style="text-align: center;">{{ $cont++ }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>
-                                ver / editar / eliminar
+                            <td style="text-align: center;">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></button>
+                                    <button type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></button>
+                                    <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                  </div>
                             </td>
                         </tr>
                     @endforeach
@@ -47,20 +51,54 @@
             <script>
                 $(function() {
                     $("#example1").DataTable({
+                        "pageLength": 10,
+                        "language": {
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando START a END de TOTAL Usuarios",
+                            "infoEmpty": "Mostrando 0 a 0 de 0 Usuarios",
+                            "infoFiltered": "(Filtrado de MAX total Usuarios)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar MENU Usuarios",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscador:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
+                        },
                         "responsive": true,
-                        "lengthChange": false,
+                        "lengthChange": true,
                         "autoWidth": false,
-                        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                        buttons: [{
+                                extend: 'collection',
+                                text: 'Reportes',
+                                orientation: 'landscape',
+                                buttons: [{
+                                    text: 'Copiar',
+                                    extend: 'copy',
+                                }, {
+                                    extend: 'pdf'
+                                }, {
+                                    extend: 'csv'
+                                }, {
+                                    extend: 'excel'
+                                }, {
+                                    text: 'Imprimir',
+                                    extend: 'print'
+                                }]
+                            },
+                            {
+                                extend: 'colvis',
+                                text: 'Visor de columnas',
+                                collectionLayout: 'fixed three-column'
+                            }
+                        ],
                     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-                    $('#example2').DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "searching": false,
-                        "ordering": true,
-                        "info": true,
-                        "autoWidth": false,
-                        "responsive": true,
-                    });
                 });
             </script>
         </div>
