@@ -23,6 +23,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -38,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ url('/') }}" class="nav-link">Reserva de Citas Médicas</a>
+                    <a href="{{ asset('/') }}" class="nav-link">Reserva de Citas Médicas</a>
                 </li>
             </ul>
 
@@ -124,7 +132,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.sidebar -->
         </aside>
 
-        @if (( ($message = Session::get('message')) && ($icons = Session::get('icons'))))
+        @if (($message = Session::get('message')) && ($icons = Session::get('icons')))
             <script>
                 Swal.fire({
                     position: "center",
@@ -167,10 +175,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- REQUIRED SCRIPTS -->
 
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
+    <script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
+    <script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 </body>

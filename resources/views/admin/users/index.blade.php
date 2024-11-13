@@ -18,8 +18,7 @@
             </div>
         </div>
         <div class="card-body">
-            
-            <table class="table table-bordered table-hover table-sm">
+            <table id="example1" class="table table-bordered table-hover table-sm">
                 <thead>
                     <tr>
                         <th scope="col" style="text-align: center;">#</th>
@@ -45,6 +44,25 @@
                     @endforeach
                 </tbody>
             </table>
+            <script>
+                $(function() {
+                    $("#example1").DataTable({
+                        "responsive": true,
+                        "lengthChange": false,
+                        "autoWidth": false,
+                        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                    $('#example2').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "responsive": true,
+                    });
+                });
+            </script>
         </div>
 
     </div>
