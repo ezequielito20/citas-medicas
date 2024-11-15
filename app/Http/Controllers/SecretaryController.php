@@ -106,14 +106,14 @@ class SecretaryController extends Controller
             'last_names' => 'required|string|max:255',
             'user_id' => [
                 'required',
-                'exists:users,id', // Verifica que el usuario exista
-                Rule::unique('secretaries', 'user_id')->ignore($secretary->id), // Evita duplicados excepto el actual
+                'exists:users,id',
+                Rule::unique('secretaries', 'user_id')->ignore($secretary->id), 
             ],
             'ci' => [
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('secretaries', 'ci')->ignore($secretary->id), // Permite que la cédula sea única excepto para la actual
+                Rule::unique('secretaries', 'ci')->ignore($secretary->id), 
             ],
             'phone' => 'nullable|string|max:20',
             'birthdate' => 'nullable|date',
