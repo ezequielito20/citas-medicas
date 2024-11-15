@@ -153,8 +153,12 @@ class SecretaryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Secretary $secretary)
+    public function destroy($id)
     {
-        //
+        $secretary = Secretary::findOrFail($id);
+        $secretary->delete();
+        return redirect()->route('admin.secretaries.index')
+        ->with('message', 'Secretaria eliminada correctamente.')
+        ->with('icons', 'success');
     }
 }
