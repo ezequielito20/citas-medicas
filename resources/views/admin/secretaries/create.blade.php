@@ -95,7 +95,7 @@
                     @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Crear</button>
-                <a href="{{ url('users') }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ url('secretaries') }}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>
