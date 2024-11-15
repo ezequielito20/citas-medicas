@@ -24,6 +24,7 @@
                         <th scope="col" style="text-align: center;">#</th>
                         <th scope="col" style="text-align: center;">Nombres</th>
                         <th scope="col" style="text-align: center;">Apellidos</th>
+                        <th scope="col" style="text-align: center;">Email</th>
                         <th scope="col" style="text-align: center;">C.I</th>
                         <th scope="col" style="text-align: center;">Telefono</th>
                         <th scope="col" style="text-align: center;">Fecha de Nacimiento</th>
@@ -39,8 +40,13 @@
                     @foreach ($secretaries as $secretary)
                         <tr>
                             <th scope="row" style="text-align: center;">{{ $cont++ }}</th>
-                            <td>{{ $secretary->name }}</td>
-                            <td>{{ $secretary->email }}</td>
+                            <td>{{ $secretary->names }}</td>
+                            <td>{{ $secretary->last_names }}</td>
+                            <td>{{ $secretary->user->email }}</td>
+                            <td>{{ $secretary->ci }}</td>
+                            <td>{{ $secretary->phone }}</td>
+                            <td>{{ $secretary->birthdate }}</td>
+                            <td>{{ $secretary->address }}</td>
                             <td style="text-align: center;">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ url('secretaries/' . $secretary->id) }}" class="btn btn-info"><i
