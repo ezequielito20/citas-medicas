@@ -11,13 +11,13 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>{{ $total_users }}</h3>
                     <p>Usuarios</p>
                 </div>
                 <div class="icon">
                     <i class="ion fas bi bi-file-earmark-person"></i></i>
                 </div>
-                <a href="#" class="small-box-footer">Mas Información <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ url('users') }}" class="small-box-footer">Mas Información <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>

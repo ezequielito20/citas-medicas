@@ -22,7 +22,7 @@
                 <thead>
                     <tr>
                         <th scope="col" style="text-align: center;">#</th>
-                        <th scope="col" style="text-align: center;">Name</th>
+                        <th scope="col" style="text-align: center;">Nombre</th>
                         <th scope="col" style="text-align: center;">Email</th>
                         <th scope="col" style="text-align: center;">Aciones</th>
 

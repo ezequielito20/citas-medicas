@@ -14,7 +14,14 @@ return new class extends Migration
         Schema::create('secretaries', function (Blueprint $table) {
             $table->id();
 
-            
+            $table->string('names', length: 100);
+            $table->string('last_names', length: 100);
+            $table->string('ci', length: 9)->unique();
+            $table->string('phone')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('address', length: 190)->nullable();
+
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
             $table->timestamps();
         });
