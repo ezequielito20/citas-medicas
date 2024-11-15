@@ -12,12 +12,26 @@
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $total_users }}</h3>
-                    <p>Usuarios</p>
+                    <p>{{ $total_users === 1 ? 'Usuario' : 'Usuarios' }}</p>
                 </div>
                 <div class="icon">
                     <i class="ion fas bi bi-file-earmark-person"></i></i>
                 </div>
-                <a href="{{ url('users') }}" class="small-box-footer">Mas Información <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ url('users') }}" class="small-box-footer">Mas Información <i
+                        class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ $total_secretaries }}</h3>
+                    <p>{{ $total_secretaries === 1 ? 'Secretaria' : 'Secretarias' }}</p>
+                </div>
+                <div class="icon">
+                    <i class="ion fas bi bi-person-check"></i>
+                </div>
+                <a href={{url('secretaries')}} class="small-box-footer">Mas Información <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
