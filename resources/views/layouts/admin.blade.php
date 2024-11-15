@@ -103,12 +103,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                {{-- <li class="nav-item">
-                                    <a href="{{url('users/create')}}" class="nav-link ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Creación de Usuarios</p>
-                                    </a>
-                                </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ url('users') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -130,6 +124,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <a href="{{ url('secretaries') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Listado de Secretarias</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas bi bi-person-plus-fill"></i>
+                                <p>
+                                    Pacientes
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('patients') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Listado de Pacientes</p>
                                     </a>
                                 </li>
                             </ul>

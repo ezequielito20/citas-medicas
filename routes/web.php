@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SecretaryController;
+use App\Http\Controllers\Auth\LoginController;
 
 Auth::routes();
 
@@ -48,7 +49,7 @@ Route::get('/secretaries', [SecretaryController::class, 'index'])
     ->name('admin.secretaries.index')
     ->middleware('auth');
 
-    Route::get('/secretaries/create', [SecretaryController::class, 'create'])
+Route::get('/secretaries/create', [SecretaryController::class, 'create'])
     ->name('admin.secretaries.create')
     ->middleware('auth');
 
@@ -72,6 +73,34 @@ Route::get('/secretaries/{id}/delete', [SecretaryController::class, 'destroy'])
     ->name('admin.secretaries.destroy')
     ->middleware('auth');
 
+// rutas para el admin - patients----------------------------------------------------------
+Route::get('/patients', [PatientController::class, 'index'])
+    ->name('admin.patients.index')
+    ->middleware('auth');
+
+Route::get('/patients/create', [PatientController::class, 'create'])
+    ->name('admin.patients.create')
+    ->middleware('auth');
+
+Route::post('/patients/create', [PatientController::class, 'store'])
+    ->name('admin.patients.store')
+    ->middleware('auth');
+
+Route::get('/patients/{id}', [PatientController::class, 'show'])
+    ->name('admin.patients.show')
+    ->middleware('auth');
+
+Route::get('/patients/{id}/edit', [PatientController::class, 'edit'])
+    ->name('admin.patients.edit')
+    ->middleware('auth');
+
+Route::put('/patients/{id}', [PatientController::class, 'update'])
+    ->name('admin.patients.update')
+    ->middleware('auth');
+
+Route::get('/patients/{id}/delete', [PatientController::class, 'destroy'])
+    ->name('admin.patients.destroy')
+    ->middleware('auth');
 
 Route::get('/logout', [AdminController::class, 'logout'])
     ->name('logout')
