@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone', length: 20)->nullable();
             $table->date('birthdate')->nullable();
             $table->string('gender', length: 1)->nullable();
-            $table->string('blood_group', length: 20)->nullable();
+            $table->string('blood_type', length: 20)->nullable();
             $table->string('allergies', length: 190)->nullable();
             $table->string('emergency_contact', length: 100)->nullable();
             $table->string('health_insurance_number', length: 100)->nullable();
