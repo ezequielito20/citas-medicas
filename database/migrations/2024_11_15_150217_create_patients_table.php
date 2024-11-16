@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('health_insurance_number', length: 100)->nullable();
             $table->string('observations', length: 190)->nullable();
             $table->string('address', length: 190)->nullable();
-            
+
 
             $table->timestamps();
         });
