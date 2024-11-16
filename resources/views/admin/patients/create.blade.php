@@ -81,7 +81,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="gender">Genero</label>
-                            <select class="form-control" id="gender" name="gender" required>
+                            <select class="form-control" id="gender" name="gender" >
                                 <option value="" disabled selected>Selecciona un genero</option>
                                 <option value="M" {{ old('gender') == 'M' ? 'selected' : '' }}>Masculino</option>
                                 <option value="F" {{ old('gender') == 'F' ? 'selected' : '' }}>Femenino</option>
@@ -94,7 +94,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="blood_type">Tipo de sangre</label>
-                            <select class="form-control" id="blood_type" name="blood_type" required>
+                            <select class="form-control" id="blood_type" name="blood_type" >
                                 <option value="" disabled selected>Tipo de sangre</option>
                                 <option value="A+" {{ old('blood_type') == 'A+' ? 'selected' : '' }}>A+</option>
                                 <option value="A-" {{ old('blood_type') == 'A-' ? 'selected' : '' }}>A-</option>
@@ -114,7 +114,7 @@
                         <div class="form-group">
                             <label for="allergies">Alergias</label>
                             <input type="text" class="form-control" id="allergies" name="allergies"
-                                value ="{{ old('allergies') }}" placeholder="Alergias" required>
+                                value ="{{ old('allergies') }}" placeholder="Alergias" >
                             @error('allergies')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -127,7 +127,7 @@
                         <div class="form-group">
                             <label for="emergency_contact">Contacto de emergencia</label>
                             <input type="text" class="form-control" id="emergency_contact" name="emergency_contact"
-                                value ="{{ old('emergency_contact') }}" placeholder="Contacto de emergencia" required>
+                                value ="{{ old('emergency_contact') }}" placeholder="Contacto de emergencia" >
                             @error('emergency_contact')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -137,7 +137,7 @@
                         <div class="form-group">
                             <label for="health_insurance_number">Número de seguro</label>
                             <input type="text" class="form-control" id="health_insurance_number" name="health_insurance_number"
-                                value ="{{ old('health_insurance_number') }}" placeholder="Número de seguro" required>
+                                value ="{{ old('health_insurance_number') }}" placeholder="Número de seguro" >
                             @error('health_insurance_number')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -147,7 +147,7 @@
                         <div class="form-group">
                             <label for="observations">Observaciones</label>
                             <input type="text" class="form-control" id="observations" name="observations"
-                                value ="{{ old('observations') }}" placeholder="Observaciones" required>
+                                value ="{{ old('observations') }}" placeholder="Observaciones" >
                             @error('observations')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
