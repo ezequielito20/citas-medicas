@@ -49,6 +49,8 @@ class PatientController extends Controller
             'address' => 'nullable|string|max:190',
         ], [
             // Mensajes personalizados
+            'name.required' => 'El nombre es obligatorio.',
+            'last_names.required' => 'Los apellidos son obligatorios.',
             'ci.required' => 'El campo C.I es obligatorio.',
             'ci.unique' => 'Este C.I ya está registrado.',
             'email.required' => 'El correo electrónico es obligatorio.',
@@ -58,34 +60,6 @@ class PatientController extends Controller
         ]);
 
         try {
-            // dd(
-            //     $validated['name'],
-            //     $validated['last_names'],
-            //     $validated['ci'],
-            //     $validated['email'],
-            //     $validated['phone'],
-            //     $validated['birthdate'],
-            //     $validated['gender'],
-            //     $validated['blood_type'],
-            //     $validated['allergies'],
-            //     $validated['emergency_contact'],
-            //     $validated['health_insurance_number'],
-            //     $validated['observations'],
-            //     $validated['address'],
-            //     // gettype($validated['name']),
-            //     // gettype($validated['last_names']),
-            //     // gettype($validated['ci']),
-            //     // gettype($validated['email']),
-            //     // gettype($validated['phone']),
-            //     // gettype($validated['birthdate']),
-            //     // gettype($validated['gender']),
-            //     // gettype($validated['blood_type']),
-            //     // gettype($validated['allergies']),
-            //     // gettype($validated['emergency_contact']),
-            //     // gettype($validated['health_insurance_number']),
-            //     // gettype($validated['observations']),
-            //     // gettype($validated['address']),
-            // );
             // Crear el registro del paciente
             Patient::create([
                 'names' => $validated['name'],
