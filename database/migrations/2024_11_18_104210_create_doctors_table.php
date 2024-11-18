@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('specialization', length: 190);
 
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('office_id')->constrained('offices')->onDelete('cascade');
             
 
             $table->timestamps();

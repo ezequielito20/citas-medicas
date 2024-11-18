@@ -9,4 +9,21 @@ class Office extends Model
 {
     /** @use HasFactory<\Database\Factories\OfficeFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'address',
+        'capacity',
+        'phone',
+        'specialization',
+        'state',
+    ];
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
+    }
+    public function hours(){
+        return $this->hasMany(Hour::class);
+    }
 }
