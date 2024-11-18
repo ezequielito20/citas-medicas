@@ -4,11 +4,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SecretaryController;
-use App\Http\Controllers\Auth\LoginController;
 
 Auth::routes();
+Route::get('/logout', [AdminController::class, 'logout'])
+    ->name('logout')
+    ->middleware('auth');
 
 // rutas para el admin ---------------------------------------------------------------
 Route::get('/', [AdminController::class, 'index'])
@@ -102,8 +105,32 @@ Route::get('/patients/{id}/delete', [PatientController::class, 'destroy'])
     ->name('admin.patients.destroy')
     ->middleware('auth');
 
-Route::get('/logout', [AdminController::class, 'logout'])
-    ->name('logout')
+
+// rutas para el admin - patients----------------------------------------------------------
+Route::get('/offices', [OfficeController::class, 'index'])
+    ->name('admin.offices.index')
     ->middleware('auth');
 
-Auth::routes();
+Route::get('/offices/create', [OfficeController::class, 'create'])
+    ->name('admin.offices.create')
+    ->middleware('auth');
+
+Route::post('/offices/create', [OfficeController::class, 'store'])
+    ->name('admin.offices.store')
+    ->middleware('auth');
+
+Route::get('/offices/{id}', [OfficeController::class, 'show'])
+    ->name('admin.offices.show')
+    ->middleware('auth');
+
+Route::get('/offices/{id}/edit', [OfficeController::class, 'edit'])
+    ->name('admin.offices.edit')
+    ->middleware('auth');
+
+Route::put('/offices/{id}', [OfficeController::class, 'update'])
+    ->name('admin.offices.update')
+    ->middleware('auth');
+
+Route::get('/offices/{id}/delete', [OfficeController::class, 'destroy'])
+    ->name('admin.offices.destroy')
+    ->middleware('auth');
