@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Database\Factories\PatientFactory;
+use Database\Factories\SecretaryFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         PatientFactory::times(200)->create();
+        SecretaryFactory::times(10)->create();
 
         
     }

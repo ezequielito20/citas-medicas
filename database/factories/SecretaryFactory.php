@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,15 @@ class SecretaryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'names' => $this->faker->name(),
+            'last_names' => $this->faker->lastName(),
+            'ci' => $this->faker->unique()->randomNumber(9),
+            'phone' => $this->faker->phoneNumber(),
+            'birthdate' => $this->faker->date(),
+            'address' => $this->faker->address(),
+            'user_id' => User::inRandomOrder()->first()->id,
+
+
         ];
     }
 }
