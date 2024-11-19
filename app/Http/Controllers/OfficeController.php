@@ -67,7 +67,7 @@ class OfficeController extends Controller
     } catch (\Exception $e) {
         // Manejar errores
         return redirect()->route('admin.offices.create')
-            ->with('message', 'Hubo un problema al crear el consultorio.' .$e)
+            ->with('message', 'Hubo un problema al crear el consultorio.')
             ->with('icons', 'error');
     }
 }
