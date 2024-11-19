@@ -16,7 +16,7 @@ class Office extends Model
         'capacity',
         'phone',
         'specialization',
-        'state',
+        'status',
     ];
 
     public function doctors()
