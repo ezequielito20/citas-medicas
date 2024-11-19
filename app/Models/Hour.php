@@ -10,7 +10,7 @@ class Hour extends Model
     /** @use HasFactory<\Database\Factories\HourFactory> */
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'day',
         'start_time',
         'end_time', 

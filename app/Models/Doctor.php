@@ -10,7 +10,7 @@ class Doctor extends Model
     /** @use HasFactory<\Database\Factories\DoctorFactory> */
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'names',
         'last_names',
         'email',

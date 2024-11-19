@@ -12,7 +12,7 @@
             <h3 class="card-title">Consultorios Registrados</h3>
 
             <div class="card-tools">
-                <a href="{{ url('patients/create') }}" class="btn btn-primary">
+                <a href="{{ url('offices/create') }}" class="btn btn-primary">
                     Registrar Nuevo
                 </a>
             </div>
@@ -38,12 +38,12 @@
                     @foreach ($offices as $office)
                         <tr>
                             <th scope="row" style="text-align: center;">{{ $cont++ }}</th>
-                            <td>{{ $patient->name }}</td>
-                            <td>{{ $patient->address }}</td>
-                            <td>{{ $patient->capacity }}</td>
-                            <td>{{ $patient->phone }}</td>
-                            <td>{{ $patient->specialization }}</td>
-                            <td>{{ $patient->state }}</td>
+                            <td>{{ $office->name }}</td>
+                            <td>{{ $office->address }}</td>
+                            <td>{{ $office->capacity }}</td>
+                            <td>{{ $office->phone }}</td>
+                            <td>{{ $office->specialization }}</td>
+                            <td>{{ $office->state }}</td>
                             <td style="text-align: center;">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ url('offices/' . $office->id) }}" class="btn btn-info"><i
@@ -97,12 +97,12 @@
                         "pageLength": 10,
                         "language": {
                             "emptyTable": "No hay información",
-                            "info": "Mostrando START a END de TOTAL Pacientes",
-                            "infoEmpty": "Mostrando 0 a 0 de 0 Pacientes",
-                            "infoFiltered": "(Filtrado de MAX total Pacientes)",
+                            "info": "Mostrando START a END de TOTAL Consultorios",
+                            "infoEmpty": "Mostrando 0 a 0 de 0 Consultorios",
+                            "infoFiltered": "(Filtrado de MAX total Consultorios)",
                             "infoPostFix": "",
                             "thousands": ",",
-                            "lengthMenu": "Mostrar MENU Pacientes",
+                            "lengthMenu": "Mostrar MENU Consultorios",
                             "loadingRecords": "Cargando...",
                             "processing": "Procesando...",
                             "search": "Buscador:",
