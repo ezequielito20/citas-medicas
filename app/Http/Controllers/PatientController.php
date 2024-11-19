@@ -114,76 +114,76 @@ class PatientController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    // Encuentra el paciente por ID o lanza una excepción si no se encuentra
-    $patient = Patient::findOrFail($id);
+    {
+        // Encuentra el paciente por ID o lanza una excepción si no se encuentra
+        $patient = Patient::findOrFail($id);
 
-    // Validar los datos del formulario
-    $validated = $request->validate([
-        'name' => 'required|string|max:100',
-        'last_names' => 'required|string|max:100',
-        'ci' => [
-            'required',
-            'string',
-            'max:9',
-            Rule::unique('patients', 'ci')->ignore($patient->id),
-        ],
-        'email' => [
-            'required',
-            'email',
-            'max:100',
-            Rule::unique('patients', 'email')->ignore($patient->id),
-        ],
-        'phone' => 'nullable|string|max:20',
-        'birthdate' => 'nullable|date',
-        'gender' => 'nullable|string|in:M,F',
-        'blood_type' => 'nullable|string|max:20',
-        'allergies' => 'nullable|string|max:190',
-        'emergency_contact' => 'nullable|string|max:100',
-        'health_insurance_number' => 'nullable|string|max:100',
-        'observations' => 'nullable|string|max:190',
-        'address' => 'nullable|string|max:190',
-    ], [
-        // Mensajes personalizados
-        'name.required' => 'El nombre es obligatorio.',
-        'last_names.required' => 'Los apellidos son obligatorios.',
-        'ci.required' => 'El campo C.I es obligatorio.',
-        'ci.unique' => 'Este C.I ya está registrado.',
-        'email.required' => 'El correo electrónico es obligatorio.',
-        'email.email' => 'El formato del correo electrónico no es válido.',
-        'email.unique' => 'Este correo electrónico ya está registrado.',
-        'gender.in' => 'El género seleccionado no es válido.',
-    ]);
-
-    try {
-        // Actualiza el paciente con los datos validados
-        $patient->update([
-            'names' => $validated['name'],
-            'last_names' => $validated['last_names'],
-            'ci' => $validated['ci'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'] ?? $patient->phone,
-            'birthdate' => $validated['birthdate'] ?? $patient->birthdate,
-            'gender' => $validated['gender'] ?? $patient->gender,
-            'blood_type' => $validated['blood_type'] ?? $patient->blood_type,
-            'allergies' => $validated['allergies'] ?? $patient->allergies,
-            'emergency_contact' => $validated['emergency_contact'] ?? $patient->emergency_contact,
-            'health_insurance_number' => $validated['health_insurance_number'] ?? $patient->health_insurance_number,
-            'observations' => $validated['observations'] ?? $patient->observations,
-            'address' => $validated['address'] ?? $patient->address,
+        // Validar los datos del formulario
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'last_names' => 'required|string|max:100',
+            'ci' => [
+                'required',
+                'string',
+                'max:9',
+                Rule::unique('patients', 'ci')->ignore($patient->id),
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:100',
+                Rule::unique('patients', 'email')->ignore($patient->id),
+            ],
+            'phone' => 'nullable|string|max:20',
+            'birthdate' => 'nullable|date',
+            'gender' => 'nullable|string|in:M,F',
+            'blood_type' => 'nullable|string|max:20',
+            'allergies' => 'nullable|string|max:190',
+            'emergency_contact' => 'nullable|string|max:100',
+            'health_insurance_number' => 'nullable|string|max:100',
+            'observations' => 'nullable|string|max:190',
+            'address' => 'nullable|string|max:190',
+        ], [
+            // Mensajes personalizados
+            'name.required' => 'El nombre es obligatorio.',
+            'last_names.required' => 'Los apellidos son obligatorios.',
+            'ci.required' => 'El campo C.I es obligatorio.',
+            'ci.unique' => 'Este C.I ya está registrado.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El formato del correo electrónico no es válido.',
+            'email.unique' => 'Este correo electrónico ya está registrado.',
+            'gender.in' => 'El género seleccionado no es válido.',
         ]);
 
-        // Redirige a la lista de pacientes con un mensaje de éxito
-        return redirect()->route('admin.patients.index')
-            ->with('message', 'Paciente actualizado correctamente.')
-            ->with('icons', 'success');
-    } catch (\Exception $e) {
-        // Manejar errores
-        return redirect()->route('admin.patients.edit', $patient->id)
-            ->with('message', 'Hubo un problema al actualizar el paciente.')
-            ->with('icons', 'error');
+        try {
+            // Actualiza el paciente con los datos validados
+            $patient->update([
+                'names' => $validated['name'],
+                'last_names' => $validated['last_names'],
+                'ci' => $validated['ci'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'] ?? $patient->phone,
+                'birthdate' => $validated['birthdate'] ?? $patient->birthdate,
+                'gender' => $validated['gender'] ?? $patient->gender,
+                'blood_type' => $validated['blood_type'] ?? $patient->blood_type,
+                'allergies' => $validated['allergies'] ?? $patient->allergies,
+                'emergency_contact' => $validated['emergency_contact'] ?? $patient->emergency_contact,
+                'health_insurance_number' => $validated['health_insurance_number'] ?? $patient->health_insurance_number,
+                'observations' => $validated['observations'] ?? $patient->observations,
+                'address' => $validated['address'] ?? $patient->address,
+            ]);
+
+            // Redirige a la lista de pacientes con un mensaje de éxito
+            return redirect()->route('admin.patients.index')
+                ->with('message', 'Paciente actualizado correctamente.')
+                ->with('icons', 'success');
+        } catch (\Exception $e) {
+            // Manejar errores
+            return redirect()->route('admin.patients.edit', $patient->id)
+                ->with('message', 'Hubo un problema al actualizar el paciente.')
+                ->with('icons', 'error');
+        }
     }
-}
 
 
     /**
@@ -194,7 +194,7 @@ class PatientController extends Controller
         $patient = Patient::findOrFail($id);
         $patient->delete();
         return redirect()->route('admin.patients.index')
-        ->with('message', 'Paciente eliminado correctamente.')
-        ->with('icons', 'success');
+            ->with('message', 'Paciente eliminado correctamente.')
+            ->with('icons', 'success');
     }
 }
