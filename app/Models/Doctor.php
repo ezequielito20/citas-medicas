@@ -18,6 +18,7 @@ class Doctor extends Model
         'medical_leave',
         'specialization',
         'user_id',
+        'office_id',
     ];
 
     public function office()
