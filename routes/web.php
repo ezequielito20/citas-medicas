@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SecretaryController;
@@ -106,7 +107,7 @@ Route::get('/patients/{id}/delete', [PatientController::class, 'destroy'])
     ->middleware('auth');
 
 
-// rutas para el admin - patients----------------------------------------------------------
+// rutas para el admin - offices----------------------------------------------------------
 Route::get('/offices', [OfficeController::class, 'index'])
     ->name('admin.offices.index')
     ->middleware('auth');
@@ -133,4 +134,33 @@ Route::put('/offices/{id}', [OfficeController::class, 'update'])
 
 Route::get('/offices/{id}/delete', [OfficeController::class, 'destroy'])
     ->name('admin.offices.destroy')
+    ->middleware('auth');
+
+// rutas para el admin - doctors----------------------------------------------------------
+Route::get('/doctors', [DoctorController::class, 'index'])
+    ->name('admin.doctors.index')
+    ->middleware('auth');
+
+Route::get('/doctors/create', [DoctorController::class, 'create'])
+    ->name('admin.doctors.create')
+    ->middleware('auth');
+
+Route::post('/doctors/create', [DoctorController::class, 'store'])
+    ->name('admin.doctors.store')
+    ->middleware('auth');
+
+Route::get('/doctors/{id}', [DoctorController::class, 'show'])
+    ->name('admin.doctors.show')
+    ->middleware('auth');
+
+Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])
+    ->name('admin.doctors.edit')
+    ->middleware('auth');
+
+Route::put('/doctors/{id}', [DoctorController::class, 'update'])
+    ->name('admin.doctors.update')
+    ->middleware('auth');
+
+Route::get('/doctors/{id}/delete', [DoctorController::class, 'destroy'])
+    ->name('admin.doctors.destroy')
     ->middleware('auth');

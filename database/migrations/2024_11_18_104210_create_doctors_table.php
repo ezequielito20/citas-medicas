@@ -16,7 +16,6 @@ return new class extends Migration
 
             $table->string('names', length: 100);
             $table->string('last_names', length: 100);
-            $table->string('email', length: 100)->unique();
             $table->string('phone', length: 100);
             $table->string('medical_leave', length: 190);
             $table->string('specialization', length: 190);
