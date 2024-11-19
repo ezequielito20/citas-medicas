@@ -27,7 +27,7 @@
                         <th scope="col" style="text-align: center;">Capacidad</th>
                         <th scope="col" style="text-align: center;">Telefono</th>
                         <th scope="col" style="text-align: center;">Especialidad</th>
-                        <th scope="col" style="text-align: center;">Estado</th>
+                        <th scope="col" style="text-align: center;">Status</th>
                         <th scope="col" style="text-align: center;">Aciones</th>
                     </tr>
                 </thead>
@@ -43,7 +43,7 @@
                             <td>{{ $office->capacity }}</td>
                             <td>{{ $office->phone }}</td>
                             <td>{{ $office->specialization }}</td>
-                            <td>{{ $office->state }}</td>
+                            <td>{{ $office->status }}</td>
                             <td style="text-align: center;">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ url('offices/' . $office->id) }}" class="btn btn-info"><i

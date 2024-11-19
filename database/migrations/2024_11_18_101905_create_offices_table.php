@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('capacity', length: 20);
             $table->string('phone', length: 20)->nullable();
             $table->string('specialization', length: 100);
-            $table->string('state', length: 100);
+            $table->string('status', length: 100);
 
             $table->timestamps();
         });
