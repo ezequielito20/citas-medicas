@@ -37,7 +37,7 @@
         </div>
         <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box" style="background-color: #dd26f1;">
+            <div class="small-box" style="background-color: #e768f5;">
                 <div class="inner">
                     <h3>{{ $total_patients }}</h3>
                     <p>{{ $total_patients === 1 ? 'Paciente' : 'Pacientes' }}</p>
@@ -46,6 +46,20 @@
                     <i class="ion fas bi bi-person-fill-add"></i>
                 </div>
                 <a href="{{ url('patients') }}" class="small-box-footer">Mas Información <i
+                        class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box" style="background-color: #61e2c2;">
+                <div class="inner">
+                    <h3>{{ $total_offices }}</h3>
+                    <p>{{ $total_offices === 1 ? 'Consultorio' : 'Consultorios' }}</p>
+                </div>
+                <div class="icon">
+                    <i class="ion fas bi bi-house-fill"></i>
+                </div>
+                <a href="{{ url('offices') }}" class="small-box-footer">Mas Información <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>

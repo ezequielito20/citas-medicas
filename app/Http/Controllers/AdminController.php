@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Office;
 use App\Models\Patient;
 use App\Models\Secretary;
 use Illuminate\Http\Request;
@@ -15,7 +16,8 @@ class AdminController extends Controller
         $total_users = User::count();
         $total_secretaries = Secretary::count();
         $total_patients = Patient::count();
-        return view('admin.index', compact('total_users','total_secretaries','total_patients'));
+        $total_offices = Office::count();
+        return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices'));
     }
 
     public function logout(Request $request){
