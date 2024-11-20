@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Editar</button>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
                 <a href="{{ url('offices') }}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>

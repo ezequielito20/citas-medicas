@@ -180,7 +180,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Editar</button>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
             <a href="{{ url('patients') }}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>

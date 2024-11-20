@@ -63,6 +63,20 @@
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box" style="background-color: #d7e261;">
+                <div class="inner">
+                    <h3>{{ $total_doctors }}</h3>
+                    <p>{{ $total_doctors === 1 ? 'Doctor' : 'Doctores' }}</p>
+                </div>
+                <div class="icon">
+                    <i class="ion fas bi bi-bag-heart-fill"></i>
+                </div>
+                <a href="{{ url('doctors') }}" class="small-box-footer">Mas Información <i
+                        class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
     </div>
 
 @endsection()
