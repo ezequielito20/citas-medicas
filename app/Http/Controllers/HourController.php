@@ -81,15 +81,16 @@ class HourController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Hour $hour)
+    public function show($id)
     {
-        //
+        $hour = Hour::with('doctor', 'office')->findOrFail($id);
+        return view('admin.hours.show', compact('hour'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Hour $hour)
+    public function edit($id)
     {
         //
     }

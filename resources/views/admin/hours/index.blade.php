@@ -44,11 +44,11 @@
                             <td>{{ $hour->office->name }}</td>
                             <td style="text-align: center;">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="{{ url('doctors/' . $hour->id) }}" class="btn btn-info"><i
+                                    <a href="{{ url('hours/' . $hour->id) }}" class="btn btn-info"><i
                                             class="bi bi-eye"></i></a>
-                                    <a href="{{ url('doctors/' . $hour->id . '/edit') }}" class="btn btn-success btn-sm"><i
+                                    <a href="{{ url('hours/' . $hour->id . '/edit') }}" class="btn btn-success btn-sm"><i
                                             class="bi bi-pencil"></i></a>
-                                    <a href="{{ url('doctors/' . $hour->id . '/delete') }}"
+                                    <a href="{{ url('hours/' . $hour->id . '/delete') }}"
                                         class="btn btn-danger btn-sm delete-link"><i class="bi bi-trash"></i></a>
                                 </div>
                             </td>
