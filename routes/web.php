@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HourController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoctorController;
@@ -163,4 +164,33 @@ Route::put('/doctors/{id}', [DoctorController::class, 'update'])
 
 Route::get('/doctors/{id}/delete', [DoctorController::class, 'destroy'])
     ->name('admin.doctors.destroy')
+    ->middleware('auth');
+
+// rutas para el admin - hours----------------------------------------------------------
+Route::get('/hours', [HourController::class, 'index'])
+    ->name('admin.hours.index')
+    ->middleware('auth');
+
+Route::get('/hours/create', [HourController::class, 'create'])
+    ->name('admin.hours.create')
+    ->middleware('auth');
+
+Route::post('/hours/create', [HourController::class, 'store'])
+    ->name('admin.hours.store')
+    ->middleware('auth');
+
+Route::get('/hours/{id}', [HourController::class, 'show'])
+    ->name('admin.hours.show')
+    ->middleware('auth');
+
+Route::get('/hours/{id}/edit', [HourController::class, 'edit'])
+    ->name('admin.hours.edit')
+    ->middleware('auth');
+
+Route::put('/hours/{id}', [HourController::class, 'update'])
+    ->name('admin.hours.update')
+    ->middleware('auth');
+
+Route::get('/hours/{id}/delete', [HourController::class, 'destroy'])
+    ->name('admin.hours.destroy')
     ->middleware('auth');

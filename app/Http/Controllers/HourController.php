@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hour;
+use App\Models\Doctor;
+use App\Models\Office;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreHourRequest;
 use App\Http\Requests\UpdateHourRequest;
 
@@ -13,7 +16,8 @@ class HourController extends Controller
      */
     public function index()
     {
-        //
+        $hours = Hour::with('doctor', 'office')->get();
+        return view('admin.hours.index', compact('hours'));
     }
 
     /**
@@ -21,15 +25,57 @@ class HourController extends Controller
      */
     public function create()
     {
-        //
+        $doctors = Doctor::all();
+        $offices = Office::all();
+        return view('admin.hours.create', compact('doctors', 'offices'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreHourRequest $request)
+    public function store(Request $request)
     {
-        //
+        // Validación de los datos enviados desde el formulario
+        $validatedData = $request->validate([
+            'day' => 'required|string|max:100',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+            'doctor_id' => 'required|exists:doctors,id',
+            'office_id' => 'required|exists:offices,id',
+        ], [
+            // Mensajes de error personalizados
+            'day.required' => 'El día es obligatorio.',
+            'start_time.required' => 'La hora de inicio es obligatoria.',
+            'start_time.date_format' => 'El formato de la hora de inicio no es válido.',
+            'end_time.required' => 'La hora de fin es obligatoria.',
+            'end_time.date_format' => 'El formato de la hora de fin no es válido.',
+            'end_time.after' => 'La hora de fin debe ser posterior a la hora de inicio.',
+            'doctor_id.required' => 'Debes seleccionar un doctor.',
+            'doctor_id.exists' => 'El doctor seleccionado no es válido.',
+            'office_id.required' => 'Debes seleccionar un consultorio.',
+            'office_id.exists' => 'El consultorio seleccionado no es válido.',
+        ]);
+
+        try {
+            // Crear el horario en la base de datos
+            Hour::create([
+                'day' => $validatedData['day'],
+                'start_time' => $validatedData['start_time'],
+                'end_time' => $validatedData['end_time'],
+                'doctor_id' => $validatedData['doctor_id'],
+                'office_id' => $validatedData['office_id'],
+            ]);
+
+            // Redirigir con mensaje de éxito
+            return redirect()->route('admin.hours.index')
+                ->with('message', 'Horario creado exitosamente.')
+                ->with('icons', 'success');
+        } catch (\Exception $e) {
+            // Si ocurre un error, redirigir con mensaje de error
+            return redirect()->route('admin.hours.create')
+                ->with('message', 'Hubo un problema al crear el horario. Por favor, intente nuevamente.')
+                ->with('icons', 'error');
+        }
     }
 
     /**
