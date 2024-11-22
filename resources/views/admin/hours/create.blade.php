@@ -18,9 +18,16 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="day">Dia </label>
-                            <input type="text" class="form-control" id="day" name="day"
-                                value="{{ old('day') }}" placeholder="Dia" required>
+                            <label for="day">Dia de la semana </label>
+                            <select class="form-control" id="day" name="day" required>
+                                <option value="" disabled {{ old('day') ? '' : 'selected' }}>Seleccione un día</option>
+                                <option value="Lunes" {{ old('day') === 'Lunes' ? 'selected' : '' }}>Lunes</option>
+                                <option value="Martes" {{ old('day') === 'Martes' ? 'selected' : '' }}>Martes</option>
+                                <option value="Miercoles" {{ old('day') === 'Miercoles' ? 'selected' : '' }}>Miércoles</option>
+                                <option value="Jueves" {{ old('day') === 'Jueves' ? 'selected' : '' }}>Jueves</option>
+                                <option value="Viernes" {{ old('day') === 'Viernes' ? 'selected' : '' }}>Viernes</option>
+                                <option value="Sabado" {{ old('day') === 'Sabado' ? 'selected' : '' }}>Sábado</option>
+                            </select>
                             @error('day')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

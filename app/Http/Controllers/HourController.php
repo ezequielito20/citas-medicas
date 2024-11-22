@@ -37,7 +37,7 @@ class HourController extends Controller
     {
         // Validación de los datos enviados desde el formulario
         $validatedData = $request->validate([
-            'day' => 'required|string|max:100',
+            'day' => 'required|string|max:100|in:Lunes,Martes,Miercoles,Jueves,Viernes,Sabado',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
             'doctor_id' => 'required|exists:doctors,id',
@@ -45,6 +45,7 @@ class HourController extends Controller
         ], [
             // Mensajes de error personalizados
             'day.required' => 'El día es obligatorio.',
+            'day.in' => 'El día no es válido.',
             'start_time.required' => 'La hora de inicio es obligatoria.',
             'start_time.date_format' => 'El formato de la hora de inicio no es válido.',
             'end_time.required' => 'La hora de fin es obligatoria.',
@@ -55,6 +56,28 @@ class HourController extends Controller
             'office_id.required' => 'Debes seleccionar un consultorio.',
             'office_id.exists' => 'El consultorio seleccionado no es válido.',
         ]);
+
+        // Validar solapamiento de horarios excluyendo los límites
+        $hasConflict = Hour::where('day', $validatedData['day'])
+            ->where(function ($query) use ($validatedData) {
+                $query->where(function ($query) use ($validatedData) {
+                    // El nuevo rango empieza dentro de un rango existente
+                    $query->where('start_time', '<', $validatedData['end_time'])
+                        ->where('end_time', '>', $validatedData['start_time']);
+                })->orWhere(function ($query) use ($validatedData) {
+                    // El nuevo rango engloba un rango existente
+                    $query->where('start_time', '>', $validatedData['start_time'])
+                        ->where('start_time', '<', $validatedData['end_time']);
+                });
+            })
+            ->exists();
+
+        if ($hasConflict) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', 'Ya existe un horario que se superpone con el rango de tiempo ingresado.')
+                ->with('icons', 'error');
+        }
 
         try {
             // Crear el horario en la base de datos
@@ -77,6 +100,8 @@ class HourController extends Controller
                 ->with('icons', 'error');
         }
     }
+
+
 
     /**
      * Display the specified resource.
