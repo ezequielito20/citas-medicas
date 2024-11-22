@@ -27,7 +27,8 @@ class HourController extends Controller
     {
         $doctors = Doctor::all();
         $offices = Office::all();
-        return view('admin.hours.create', compact('doctors', 'offices'));
+        $hours = Hour::with('doctor', 'office')->get();
+        return view('admin.hours.create', compact('doctors', 'offices', 'hours'));
     }
 
     /**
