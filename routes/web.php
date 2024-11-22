@@ -194,3 +194,8 @@ Route::put('/hours/{id}', [HourController::class, 'update'])
 Route::get('/hours/{id}/delete', [HourController::class, 'destroy'])
     ->name('admin.hours.destroy')
     ->middleware('auth');
+
+//ajax
+Route::get('/hours/offices/{id}', [HourController::class, 'offices_data'])
+    ->name('admin.hours.offices_data')
+    ->middleware('auth');

@@ -149,7 +149,44 @@
     <div class="row justify-content-center">
         <div class="card card-outline card-primary col-md-10">
             <div class="card-header">
-                <h3 class="card-title">Calendario de Atención de Doctores</h3>
+                <h3 class="card-title">Calendario de Atención de Doctores Y Consultorios</h3><br>
+                <hr>
+                <div class="form-group">
+                    <select class="form-control" id="office_select" name="office_id">
+                        <option value="" disabled selected>Selecciona un consultorio</option>
+                        @foreach ($offices as $office)
+                            <option value="{{ $office->id }}" {{ old('office_id') == $office->id ? 'selected' : '' }}>
+                                {{ $office->name }} ({{ $office->address }})
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                        $('#office_select').on('change', function() {
+                            var consultorio_id = $('#office_select').val();
+                            
+                            var url = "{{ route('admin.hours.offices_data', ':id') }}";
+                            url = url.replace(':id', consultorio_id);
+
+                            if (consultorio_id) {
+                                $.ajax({
+                                    url: url,
+                                    type: 'GET',
+                                    success: function(data) {
+                                        $('#consultorio_info').html(data);
+                                    },
+                                    error: function() {
+                                        alert('Error al obtener los datos del consultorio');
+                                    }
+                                });
+                            } else {
+                                $('#consultorio_info').html('');
+                            }
+                        });
+                    });
+                </script>
+                <div id="consultorio_info"></div>
             </div>
             <div class="card-body">
                 <table style="font-size: 15px; text-align: center;"
@@ -195,13 +232,13 @@
                                         foreach ($hours as $hour) {
                                             if (
                                                 strtoupper($hour->day) == strtoupper($day) &&
-                                                // $start_time >= $hour->start_time && 
+                                                // $start_time >= $hour->start_time &&
                                                 // $end_time <= $hour->end_time
-                                                ($start_time >= $hour->start_time || $hour->start_time < $end_time) && 
+                                                ($start_time >= $hour->start_time || $hour->start_time < $end_time) &&
                                                 ($end_time <= $hour->end_time || $hour->end_time > $start_time)
                                             ) {
                                                 $doctor_name = $hour->doctor->names;
-                                                
+
                                                 if ($day == 'Miercoles') {
                                                     // dd($start_time, $hour->start_time, $end_time, $hour->end_time, $day);
                                                 }

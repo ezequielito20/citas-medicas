@@ -16,8 +16,15 @@ class HourController extends Controller
      */
     public function index()
     {
+        $offices = Office::all();
         $hours = Hour::with('doctor', 'office')->get();
-        return view('admin.hours.index', compact('hours'));
+        return view('admin.hours.index', compact('hours', 'offices'));
+    }
+
+    public function offices_data($id){
+        echo $id;
+        // $office = Office::findOrFail($id);
+        // return view('admin.hours.offices_data', compact('office'));
     }
 
     /**
