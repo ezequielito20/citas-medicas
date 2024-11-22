@@ -41,16 +41,10 @@
                             foreach ($hours as $hour) {
                                 if (
                                     strtoupper($hour->day) == strtoupper($day) &&
-                                    // $start_time >= $hour->start_time &&
-                                    // $end_time <= $hour->end_time
                                     ($start_time >= $hour->start_time || $hour->start_time < $end_time) &&
                                     ($end_time <= $hour->end_time || $hour->end_time > $start_time)
                                 ) {
                                     $doctor_name = $hour->doctor->names;
-
-                                    if ($day == 'Miercoles') {
-                                        // dd($start_time, $hour->start_time, $end_time, $hour->end_time, $day);
-                                    }
                                     break;
                                 }
                             }
