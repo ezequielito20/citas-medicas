@@ -22,7 +22,12 @@ class HourController extends Controller
     }
 
     public function offices_data($id){
-        echo $id;
+        try {
+            $hours = Hour::with('doctor', 'office')->where('office_id', $id)->get();
+            return view('admin.hours.offices_data', compact('hours'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         // $office = Office::findOrFail($id);
         // return view('admin.hours.offices_data', compact('office'));
     }
