@@ -164,7 +164,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link active">
-                                <i class="nav-icon fas bi bi-bag-heart-fill"></i>
+                                <i class="nav-icon fas bi bi-person-hearts"></i>
                                 <p>
                                     Doctores
                                     <i class="right fas fa-angle-left"></i>

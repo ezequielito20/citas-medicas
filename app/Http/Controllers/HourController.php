@@ -72,6 +72,7 @@ class HourController extends Controller
 
         // Validar solapamiento de horarios excluyendo los límites
         $hasConflict = Hour::where('day', $validatedData['day'])
+            ->where('office_id', $validatedData['office_id'])
             ->where(function ($query) use ($validatedData) {
                 $query->where(function ($query) use ($validatedData) {
                     // El nuevo rango empieza dentro de un rango existente
@@ -88,7 +89,7 @@ class HourController extends Controller
         if ($hasConflict) {
             return redirect()->back()
                 ->withInput()
-                ->with('message', 'Ya existe un horario que se superpone con el rango de tiempo ingresado.')
+                ->with('message', 'Ya existe un horario que se superpone con el rango de tiempo ingresado en este consultorio.')
                 ->with('icons', 'error');
         }
 

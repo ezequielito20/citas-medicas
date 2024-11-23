@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hour;
 use App\Models\User;
 use App\Models\Doctor;
 use App\Models\Office;
@@ -19,7 +20,8 @@ class AdminController extends Controller
         $total_patients = Patient::count();
         $total_offices = Office::count();
         $total_doctors = Doctor::count();
-        return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices','total_doctors'));
+        $total_hours = Hour::count();
+        return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices','total_doctors','total_hours'));
     }
 
     public function logout(Request $request){
