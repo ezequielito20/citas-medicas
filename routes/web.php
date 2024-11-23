@@ -16,9 +16,14 @@ Route::get('/logout', [AdminController::class, 'logout'])
     ->middleware('auth');
 
 // rutas para el admin ---------------------------------------------------------------
-Route::get('/', [AdminController::class, 'index'])
+Route::get('/index', [AdminController::class, 'index'])
     ->name('admin.index')
     ->middleware('auth');
+
+    Route::get('/', function () {
+        return view('index');
+    })
+    ->name('admin.home');
 
 // rutas para el admin - users
 Route::get('/users', [UserController::class, 'index'])
