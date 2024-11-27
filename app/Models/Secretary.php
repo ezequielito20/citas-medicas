@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Secretary extends Model
 {
+    use HasRoles;
     protected $fillable = [
         // $table->string('names', length: 100);
         //     $table->string('last_names', length: 100);
