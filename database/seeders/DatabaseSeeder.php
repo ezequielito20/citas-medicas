@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\Hash;
 use Database\Factories\PatientFactory;
 use Database\Factories\SecretaryFactory;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,6 +44,15 @@ class DatabaseSeeder extends Seeder
 
         PatientFactory::times(200)->create();
         SecretaryFactory::times(10)->create();
+
+        //------------------------ seeders para roles y permisos ----------------------------------
+        //----- Admin, Secretaria, Doctor, Paciente, Usuario --------------------------------------
+        $admin = Role::create(['name' => 'admin']);
+        $secretary = Role::create(['name' => 'secretary']);
+        $doctor = Role::create(['name' => 'doctor']);
+        $patient = Role::create(['name' => 'patient']);
+        $user = Role::create(['name' => 'user']);
+
 
         
     }
