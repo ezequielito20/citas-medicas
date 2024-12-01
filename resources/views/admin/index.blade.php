@@ -7,6 +7,7 @@
     </div>
 
     <div class="row">
+        @can('admin.users.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
@@ -21,6 +22,8 @@
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        @endcan
+        @can('admin.secretaries.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
@@ -35,6 +38,8 @@
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        @endcan
+        @can('admin.patients.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box" style="background-color: #e768f5;">
@@ -49,6 +54,8 @@
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        @endcan
+        @can('admin.offices.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box" style="background-color: #61e2c2;">
@@ -63,6 +70,8 @@
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        @endcan
+        @can('admin.doctors.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box" style="background-color: #d7e261;">
@@ -77,6 +86,8 @@
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        @endcan
+        @can('admin.hours.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box" style="background-color: #c07dec;">
@@ -91,6 +102,7 @@
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        @endcan
     </div>
 
 @endsection()
