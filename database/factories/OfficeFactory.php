@@ -17,7 +17,12 @@ class OfficeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name(),
+            'address' => $this->faker->address(),
+            'capacity' => $this->faker->numberBetween(1, 20),
+            'phone' => $this->faker->phoneNumber(),
+            'specialization' => $this->faker->word(),
+            'status' => $this->faker->randomElement(['activo', 'inactivo'])
         ];
     }
 }

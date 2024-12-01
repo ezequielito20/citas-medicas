@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Doctor;
+use App\Models\Office;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class HourFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'day' => $this->faker->randomElement(['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']),
+            'start_time' => $this->faker->time('H:i'),
+            'end_time' => $this->faker->time('H:i'),
+            'doctor_id' => Doctor::inRandomOrder()->first()->id,
+            'office_id' => Office::inRandomOrder()->first()->id,
         ];
     }
 }
