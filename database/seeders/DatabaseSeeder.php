@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
         SecretaryFactory::times(10)->create();
         OfficeFactory::times(20)->create();
         DoctorFactory::times(12)->create();
-        HourFactory::times(40)->create();
+        HourFactory::times(25)->create();
 
         
 
