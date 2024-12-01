@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="row">
-        <h1>Panel Principal</h1>
+        <h1>Bienvenido: {{ Auth::user()->name }}</h1>
     </div>
 
     <div class="row">
