@@ -92,8 +92,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+                        @can('admin.users.index')
                         <li class="nav-item">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas bi bi-people-fill"></i>
@@ -111,6 +110,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endcan
+                        @can('admin.secretaries.index')
                         <li class="nav-item">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas bi bi-person-check-fill"></i>
@@ -128,6 +129,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endcan
+                        @can('admin.patients.index')
                         <li class="nav-item">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas bi bi-person-plus-fill"></i>
@@ -145,6 +148,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endcan
+                        @can('admin.offices.index')
                         <li class="nav-item">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas bi bi-house-check-fill"></i>
@@ -162,6 +167,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endcan
+                        @can('admin.doctors.index')
                         <li class="nav-item">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas bi bi-person-hearts"></i>
@@ -179,6 +186,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endcan
+                        @can('admin.hours.index')
                         <li class="nav-item">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas bi bi-calendar3"></i>
@@ -196,6 +205,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endcan
                         <li class="nav-item">
                             <a href="{{ url('logout') }}" class="nav-link">
                                 <i class="nav-icon fas bi bi-box-arrow-right"></i>
