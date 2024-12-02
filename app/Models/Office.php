@@ -27,4 +27,7 @@ class Office extends Model
     public function hours(){
         return $this->hasMany(Hour::class);
     }
+    public function events(){
+        return $this->hasMany(Event::class);
+    }
 }

@@ -169,9 +169,174 @@
                             @endforeach
                         </select>
                     </div> --}}
-                    
+
                 </div>
                 <div class="card-body">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Registrar cita
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Reserva de Cita Medica</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="modal-body card card-outline card-primary col-md-11 ">
+                                        {{-- <div class="card card-outline card-primary">
+    
+                                            <div class="card-header">
+                                                <h3 class="card-title">Crear Horario</h3>
+                                            </div>
+                                            <div class="card-body"> --}}
+                                        <form action="{{ route('admin.hours.store') }}" method="POST">
+                                            @csrf
+                                            {{-- <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="office_id">Seleccionar Consultorio</label>
+                                                        <select class="form-control" id="office_id" name="office_id"
+                                                            required>
+                                                            <option value="" disabled selected>Selecciona un
+                                                                consultorio</option>
+                                                            @foreach ($offices as $office)
+                                                                <option value="{{ $office->id }}"
+                                                                    {{ old('office_id') == $office->id ? 'selected' : '' }}>
+                                                                    {{ $office->name }} ({{ $office->address }})
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('office_id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div> --}}
+                                            {{-- <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="title">Título</label>
+                                                        <input type="text" class="form-control" id="title"
+                                                            name="title" value="{{ old('title') }}"
+                                                            placeholder="Título" required>
+                                                        @error('title')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div> --}}
+                                            {{-- <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="day">Dia de la semana </label>
+                                                        <select class="form-control" id="day" name="day"
+                                                            required>
+                                                            <option value="" disabled
+                                                                {{ old('day') ? '' : 'selected' }}>Seleccione un día
+                                                            </option>
+                                                            <option value="Lunes"
+                                                                {{ old('day') === 'Lunes' ? 'selected' : '' }}>Lunes
+                                                            </option>
+                                                            <option value="Martes"
+                                                                {{ old('day') === 'Martes' ? 'selected' : '' }}>Martes
+                                                            </option>
+                                                            <option value="Miercoles"
+                                                                {{ old('day') === 'Miercoles' ? 'selected' : '' }}>
+                                                                Miércoles
+                                                            </option>
+                                                            <option value="Jueves"
+                                                                {{ old('day') === 'Jueves' ? 'selected' : '' }}>Jueves
+                                                            </option>
+                                                            <option value="Viernes"
+                                                                {{ old('day') === 'Viernes' ? 'selected' : '' }}>Viernes
+                                                            </option>
+                                                            <option value="Sabado"
+                                                                {{ old('day') === 'Sabado' ? 'selected' : '' }}>Sábado
+                                                            </option>
+                                                        </select>
+                                                        @error('day')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div> --}}
+
+                                            <div class="row">
+                                                <div class=" col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="date">Fecha de Reserva</label>
+                                                        <input type="date" class="form-control" id="date"
+                                                            name="date" value="{{ old('date') }}"
+                                                            placeholder="Fecha de Reserva" required>
+                                                        @error('date')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="hour">Hora de Inicio</label>
+                                                        <input type="time" class="form-control" id="hour"
+                                                            name="hour" value="{{ old('hour') }}"
+                                                            placeholder="Hora de Inicio" required>
+                                                        @error('hour')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="end_time">Hora de Fin</label>
+                                                        <input type="time" class="form-control" id="end_time"
+                                                            name="end_time" value="{{ old('end_time') }}"
+                                                            placeholder="Hora de Fin" required>
+                                                        @error('end_time')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div> --}}
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="doctor_id">Seleccionar Doctor</label>
+                                                        <select class="form-control" id="doctor_id" name="doctor_id"
+                                                            required>
+                                                            <option value="" disabled selected>Selecciona un doctor
+                                                            </option>
+                                                            @foreach ($doctors as $doctor)
+                                                                <option value="{{ $doctor->id }}"
+                                                                    {{ old('doctor_id') == $doctor->id ? 'selected' : '' }}>
+                                                                    {{ $doctor->names }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('doctor_id')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Crear</button>
+                                            <a href="{{ url('hours') }}" class="btn btn-secondary">Cancelar</a>
+                                        </form>
+                                        {{-- </div>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary">Registrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="calendar"></div>
                 </div>
 
@@ -179,30 +344,27 @@
         </div>
     </div>
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
-          var calendarEl = document.getElementById('calendar');
-          var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'es',
-            events: [
-                {
-                    title: 'Event 1',
-                    start: '2024-12-01',
-                    end: '2024-12-01',
-                    color: '#ff0000'
-                },
-                {
-                    title: 'Event 2',
-                    start: '2024-12-01',
-                    end: '2024-12-01',
-                    color: '#00ff00'
-                },
-                
-            ]
-          });
-          calendar.render();
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'es',
+                events: [{
+                        title: 'Event 1',
+                        start: '2024-12-01',
+                        end: '2024-12-01',
+                        color: '#ff0000'
+                    },
+                    {
+                        title: 'Event 2',
+                        start: '2024-12-01',
+                        end: '2024-12-01',
+                        color: '#00ff00'
+                    },
+
+                ]
+            });
+            calendar.render();
         });
-  
-      </script>
+    </script>
 @endsection()
