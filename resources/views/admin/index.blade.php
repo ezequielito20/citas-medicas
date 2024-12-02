@@ -152,14 +152,13 @@
             </div>
         </div>
     </div>
-
     <div class="row col-md-12">
         <div class=" justify-content-center col-md-12">
             <div class="card card-outline card-warning ">
                 <div class="card-header">
                     <h3 class="card-title">Calendario de Reserva de Citas Medicas</h3><br>
                     <hr>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <select class="form-control" id="office_select" name="office_id">
                             <option value="" disabled selected>Selecciona un consultorio</option>
                             @foreach ($offices as $office)
@@ -169,11 +168,26 @@
                                 </option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
                     
+                </div>
+                <div class="card-body">
+                    <div id="calendar"></div>
                 </div>
 
             </div>
         </div>
     </div>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+          var calendarEl = document.getElementById('calendar');
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'es',
+          });
+          calendar.render();
+        });
+  
+      </script>
 @endsection()
