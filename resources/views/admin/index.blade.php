@@ -275,6 +275,26 @@
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+                                                    <script>
+                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                            const fechaReservaInput = document.getElementById('date');
+
+                                                            // Escuchar el evento de cambio en el campo de fecha de reserva
+                                                            fechaReservaInput.addEventListener('change', function() {
+                                                                let selectedDate = this.value; // Obtener la fecha seleccionada
+
+                                                                // Obtener la fecha actual en formato ISO (yyyy-mm-dd)
+                                                                let today = new Date().toISOString().slice(0, 10);
+
+                                                                // Verificar si la fecha seleccionada es anterior a la fecha actual
+                                                                if (selectedDate < today) {
+                                                                    // Si es así, establecer la fecha seleccionada en null
+                                                                    this.value = null;
+                                                                    alert('No puede seleccionar una fecha pasada.');
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -286,6 +306,29 @@
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+                                                    <script>
+                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                            const horaReservaInput = document.getElementById('hour');
+
+                                                            horaReservaInput.addEventListener('change', function() {
+                                                                let selectedTime = this.value; // Obtener el valor de la hora seleccionada
+
+                                                                // Asegurar que solo se capture la parte de la hora
+                                                                if (selectedTime) {
+                                                                    selectedTime = selectedTime.split(':'); // Dividir la cadena en horas y minutos
+                                                                    selectedTime = selectedTime[0] + ':00'; // Conservar solo la hora, ignorar los minutos
+                                                                    this.value = selectedTime; // Establecer la hora modificada en el campo de entrada
+                                                                }
+
+                                                                // Verificar si la hora seleccionada está fuera del rango permitido
+                                                                if (selectedTime < '08:00' || selectedTime >= '20:00') {
+                                                                    // Si es así, establecer la hora seleccionada en null
+                                                                    this.value = null;
+                                                                    alert('Por favor, seleccione una hora entre las 08:00 y las 19:59.');
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
                                                 </div>
                                             </div>
                                             {{-- <div class="col-md-3">
