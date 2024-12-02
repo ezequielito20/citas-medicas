@@ -9,21 +9,25 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SecretaryController;
+use App\Http\Controllers\WebController;
 
 Auth::routes();
 Route::get('/logout', [AdminController::class, 'logout'])
     ->name('logout')
     ->middleware('auth');
 
+
+// rutas principales -----------------------------------------------------------------
+Route::get('/', [WebController::class, 'index'])
+    ->name('admin.home');
+//ajax
+Route::get('/office/{id}', [WebController::class, 'offices_data'])
+    ->name('offices_data');
+
 // rutas para el admin ---------------------------------------------------------------
 Route::get('/index', [AdminController::class, 'index'])
     ->name('admin.index')
     ->middleware('auth');
-
-    Route::get('/', function () {
-        return view('index');
-    })
-    ->name('admin.home');
 
 // rutas para el admin - users
 Route::get('/users', [UserController::class, 'index'])
@@ -204,3 +208,4 @@ Route::get('/hours/{id}/delete', [HourController::class, 'destroy'])
 Route::get('/hours/offices/{id}', [HourController::class, 'offices_data'])
     ->name('admin.hours.offices_data')
     ->middleware('auth','can:admin.hours.offices_data');
+

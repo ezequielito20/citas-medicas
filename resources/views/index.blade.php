@@ -29,6 +29,8 @@
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
 
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
     <!-- =======================================================
   * Template Name: iLanding
   * Template URL: https://bootstrapmade.com/ilanding-bootstrap-landing-page-template/
@@ -81,7 +83,7 @@
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            <a class="btn-getstarted" href="{{url('/index')}}">Ingresar</a>
+            <a class="btn-getstarted" href="{{ url('/index') }}">Ingresar</a>
 
         </div>
     </header>
@@ -192,7 +194,55 @@
             </div>
 
         </section><!-- /Hero Section -->
+        <br><br>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card card-outline card-primary col-md-10">
+                    <div class="card-header">
+                        <h3 class="card-title">Calendario de Atención de Doctores Y Consultorios</h3><br>
+                        <hr>
+                        <div class="form-group">
+                            <select class="form-control" id="office_select" name="office_id">
+                                <option value="" disabled selected>Selecciona un consultorio</option>
+                                @foreach ($offices as $office)
+                                    <option value="{{ $office->id }}"
+                                        {{ old('office_id') == $office->id ? 'selected' : '' }}>
+                                        {{ $office->name }} ({{ $office->address }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#office_select').on('change', function() {
+                                    var consultorio_id = $('#office_select').val();
 
+                                    var url = "{{ route('offices_data', ':id') }}";
+                                    url = url.replace(':id', consultorio_id);
+                                    
+                                    if (consultorio_id) {
+                                        $.ajax({
+                                            url: url,
+                                            type: 'GET',
+                                            success: function(data) {
+                                                $('#consultorio_info').html(data);
+                                            },
+                                            error: function() {
+                                                alert('Error al obtener los datos del consultorio');
+                                            }
+                                        });
+                                    } else {
+                                        $('#consultorio_info').html('');
+                                    }
+                                });
+                            });
+                        </script>
+                        <div id="consultorio_info"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <!-- About Section -->
         <section id="about" class="about section">
 
@@ -1257,7 +1307,7 @@
         <div class="container footer-top">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="{{url('/')}}" class="logo d-flex align-items-center">
+                    <a href="{{ url('/') }}" class="logo d-flex align-items-center">
                         <span class="sitename">iLanding</span>
                     </a>
                     <div class="footer-contact pt-3">
