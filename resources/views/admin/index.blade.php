@@ -196,7 +196,7 @@
                                                 <h3 class="card-title">Crear Horario</h3>
                                             </div>
                                             <div class="card-body"> --}}
-                                        <form action="{{ route('admin.hours.store') }}" method="POST">
+                                        <form action="{{ route('admin.events.store') }}" method="POST">
                                             @csrf
                                             {{-- <div class="col-md-3">
                                                     <div class="form-group">
@@ -323,17 +323,17 @@
                                             </div>
 
                                             <button type="submit" class="btn btn-primary">Crear</button>
-                                            <a href="{{ url('hours') }}" class="btn btn-secondary">Cancelar</a>
+                                            <a href="{{ url('/index') }}" class="btn btn-secondary">Cancelar</a>
                                         </form>
                                         {{-- </div>
                                         </div> --}}
                                     </div>
                                 </div>
-                                <div class="modal-footer">
+                                {{-- <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-dismiss="modal">Cancelar</button>
                                     <button type="button" class="btn btn-primary">Registrar</button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -343,6 +343,13 @@
             </div>
         </div>
     </div>
+    @if ($errors->any())
+        <script>
+            $(document).ready(function() {
+                $('#exampleModal').modal('show');
+            });
+        </script>
+    @endif
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');

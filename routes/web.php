@@ -6,6 +6,7 @@ use App\Http\Controllers\HourController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SecretaryController;
@@ -23,6 +24,8 @@ Route::get('/', [WebController::class, 'index'])
 //ajax
 Route::get('/office/{id}', [WebController::class, 'offices_data'])
     ->name('offices_data');
+Route::post('/event/create', [EventController::class, 'store'])
+    ->name('admin.events.store');
 
 // rutas para el admin ---------------------------------------------------------------
 Route::get('/index', [AdminController::class, 'index'])

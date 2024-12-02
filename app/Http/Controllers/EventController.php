@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Http\Requests\StoreEventRequest;
+use App\Models\Doctor;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateEventRequest;
 
 class EventController extends Controller
@@ -27,10 +30,57 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request)
+    
+    public function store(Request $request)
     {
-        //
+        // Validar los datos de la solicitud
+        $validated = $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+            'date' => 'required|date|after_or_equal:today',
+            // 'hour' => ['required', 'string', 'max:20'],
+            'hour' => ['required', 'regex:/^(0[8-9]|1[0-9]|19):[0-5][0-9]$/', 'string', 'max:20'],
+            // 'office_id' => 'required|exists:offices,id',
+        ], [
+            'doctor_id.required' => 'El doctor es obligatorio.',
+            'doctor_id.exists' => 'El doctor seleccionado no existe.',
+            'date.required' => 'La fecha es obligatoria.',
+            'date.date' => 'La fecha debe ser válida.',
+            'date.after_or_equal' => 'La fecha debe ser hoy o una fecha futura.',
+            'hour.required' => 'La hora es obligatoria.',
+            'hour.string' => 'La hora debe ser un texto válido.',
+            'hour.max' => 'La hora no debe exceder los 20 caracteres.',
+            'hour.regex' => 'La hora debe estar en un formato válido y estar entre las 08:00 y las 19:59.',
+            // 'office_id.required' => 'El consultorio es obligatorio.',
+            // 'office_id.exists' => 'El consultorio seleccionado no existe.',
+        ]);
+
+        // Obtener el doctor relacionado
+        $doctor = Doctor::find($validated['doctor_id']);
+
+        try{
+            // Crear el evento
+            Event::create([
+                'title' => $validated['hour'] . " - " . $doctor->specialization,
+                'start' => $validated['date'],
+                'end' => $validated['date'],
+                'color' => "#ff0000", 
+                'user_id' => Auth::user()->id, 
+                'doctor_id' => $validated['doctor_id'], 
+                'office_id' => '1', 
+            ]);
+
+            // Redirigir con mensaje de éxito
+            return redirect()->route('admin.index')
+                ->with('message', 'Evento creado correctamente.')
+                ->with('icons', 'success');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.index')
+                ->withErrors($e->getMessage()) // Pasar los errores al formulario
+                ->with('message', 'Hubo un problema al crear el doctor.')
+                ->with('icons', 'error');
+        }
     }
+
 
     /**
      * Display the specified resource.
