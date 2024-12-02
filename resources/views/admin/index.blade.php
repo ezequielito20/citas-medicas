@@ -185,6 +185,21 @@
           var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             locale: 'es',
+            events: [
+                {
+                    title: 'Event 1',
+                    start: '2024-12-01',
+                    end: '2024-12-01',
+                    color: '#ff0000'
+                },
+                {
+                    title: 'Event 2',
+                    start: '2024-12-01',
+                    end: '2024-12-01',
+                    color: '#00ff00'
+                },
+                
+            ]
           });
           calendar.render();
         });
