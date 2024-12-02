@@ -60,6 +60,12 @@ class SecretaryController extends Controller
                 'address' => $validated['address'] ?? null,
             ]);
 
+            // Obtener el usuario asociado
+            $user = User::find($validated['user_id']);
+
+            // Asignar el rol al usuario
+            $user->assignRole('secretary');
+
             // Redirigir con mensaje de éxito
             return redirect()->route('admin.secretaries.index')
                 ->with('message', 'Secretaria creada correctamente.')
@@ -67,7 +73,7 @@ class SecretaryController extends Controller
         } catch (\Exception $e) {
             // Si ocurre un error, redirigir con mensaje de error
             return redirect()->route('admin.secretaries.create')
-                ->with('message', 'Hubo un problema al crear la secretaria.')
+                ->with('message', 'Hubo un problema al crear la secretaria: ' . $e->getMessage())
                 ->with('icons', 'error');
         }
     }
@@ -107,13 +113,13 @@ class SecretaryController extends Controller
             'user_id' => [
                 'required',
                 'exists:users,id',
-                Rule::unique('secretaries', 'user_id')->ignore($secretary->id), 
+                Rule::unique('secretaries', 'user_id')->ignore($secretary->id),
             ],
             'ci' => [
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('secretaries', 'ci')->ignore($secretary->id), 
+                Rule::unique('secretaries', 'ci')->ignore($secretary->id),
             ],
             'phone' => 'nullable|string|max:20',
             'birthdate' => 'nullable|date',
@@ -158,7 +164,7 @@ class SecretaryController extends Controller
         $secretary = Secretary::findOrFail($id);
         $secretary->delete();
         return redirect()->route('admin.secretaries.index')
-        ->with('message', 'Secretaria eliminada correctamente.')
-        ->with('icons', 'success');
+            ->with('message', 'Secretaria eliminada correctamente.')
+            ->with('icons', 'success');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -77,6 +78,12 @@ class PatientController extends Controller
                 'observations' => $validated['observations'] ?? null,
                 'address' => $validated['address'] ?? null,
             ]);
+
+            // Obtener el usuario asociado
+            $user = User::find($validated['user_id']);
+
+            // Asignar el rol al usuario
+            $user->assignRole('patient');
 
             // Redirigir con mensaje de éxito
             return redirect()->route('admin.patients.index')

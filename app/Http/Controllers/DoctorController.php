@@ -73,6 +73,12 @@ class DoctorController extends Controller
                 'office_id' => $validated['office_id'], // Asociar el consultorio
             ]);
 
+            // Obtener el usuario asociado
+            $user = User::find($validated['user_id']);
+
+            // Asignar el rol al usuario
+            $user->assignRole('doctor');
+
             // Redirigir con mensaje de éxito
             return redirect()->route('admin.doctors.index')
                 ->with('message', 'Doctor creado correctamente.')
