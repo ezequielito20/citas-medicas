@@ -76,7 +76,7 @@ class EventController extends Controller
             ]);
         }
 
-        // validacion de eventos duplicados
+        // validacion de eventos duplicados 
         $duplicate_events = Event::where('doctor_id', $doctor->id)
                             ->where('start',$reservation_date." ".$reservation_hour)
                             ->exists();
