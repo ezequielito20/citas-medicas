@@ -47,7 +47,8 @@
                             <td>{{ $day }}</td>
                             <td>{{ $hour }}</td> 
                             <td style="text-align: center;">
-                                    <a href="{{ url('offices/' . $event->id . '/delete') }}"
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="{{ url('events/' . $event->id . '/delete') }}"
                                         class="btn btn-danger btn-sm delete-link"><i class="bi bi-trash"></i></a>
                                 </div>
                             </td>

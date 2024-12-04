@@ -26,6 +26,8 @@ Route::get('/office/{id}', [WebController::class, 'offices_data'])->name('office
 Route::get('/doctors_reservations/{id}', [WebController::class, 'doctors_reservations'])->name('doctors_reservations');
 Route::get('/see_reservations/{id}', [AdminController::class, 'see_reservations'])->name('admin.see_reservations');
 Route::post('/event/create', [EventController::class, 'store'])->name('admin.events.store');
+Route::get('/events/{id}/delete', [EventController::class, 'destroy'])
+    ->name('admin.events.destroy');
 
 // rutas para el admin ---------------------------------------------------------------
 Route::get('/index', [AdminController::class, 'index'])
