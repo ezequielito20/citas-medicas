@@ -158,19 +158,55 @@
                 <div class="card-header">
                     <h3 class="card-title">Calendario de Reserva de Citas Medicas</h3><br>
                     <hr>
-                    {{-- <div class="form-group">
-                        <select class="form-control" id="office_select" name="office_id">
-                            <option value="" disabled selected>Selecciona un consultorio</option>
-                            @foreach ($offices as $office)
-                                <option value="{{ $office->id }}"
-                                    {{ old('office_id') == $office->id ? 'selected' : '' }}>
-                                    {{ $office->name }} ({{ $office->address }})
+                    <div class="form-group">
+                        <select class="form-control" id="doctor_select" name="doctor_id">
+                            <option value="" disabled selected>Selecciona un Doctor</option>
+                            @foreach ($doctors as $doctor)
+                                <option value="{{ $doctor->id }}"
+                                    {{ old('doctor_id') == $doctor->id ? 'selected' : '' }}>
+                                    {{ $doctor->names }} ({{ $doctor->specialization }})
                                 </option>
                             @endforeach
                         </select>
-                    </div> --}}
+                        <script>
+                            $(document).ready(function() {
+                                $('#doctor_select').on('change', function() {
+                                    var doctor_id = $('#doctor_select').val();
+                                    // alert(doctor_id)
+                                    var calendarEl = document.getElementById('calendar');
+                                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                                        initialView: 'dayGridMonth',
+                                        locale: 'es',
+                                        events: []
+                                    });
 
+
+                                    if (doctor_id) {
+                                        var url = "{{ route('doctors_reservations', ':id') }}";
+                                        url = url.replace(':id', doctor_id);
+                                        console.log("url: " + url)
+                                        $.ajax({
+                                            url: url,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            success: function(data) {
+                                                calendar.addEventSource(data);
+                                            },
+                                            error: function() {
+                                                alert('Error al obtener los datos del consultorio');
+                                            }
+                                        });
+                                    } else {
+                                        $('#doctor_info').html('');
+                                    }
+                                    calendar.render();
+
+                                });
+                            });
+                        </script>
+                    </div>
                 </div>
+
                 <div class="card-body">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -393,25 +429,5 @@
             });
         </script>
     @endif
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'es',
-                events: [
-                    @foreach ($events as $event)
-                        {
-                            title: '{{ $event->title }}',
-                            start: '{{ $event->start }}',
-                            end: '{{ $event->end }}',
-                            color: '{{ $event->color }}'
-                        },
-                    @endforeach
 
-                ]
-            });
-            calendar.render();
-        });
-    </script>
 @endsection()

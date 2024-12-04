@@ -22,10 +22,9 @@ Route::get('/logout', [AdminController::class, 'logout'])
 Route::get('/', [WebController::class, 'index'])
     ->name('admin.home');
 //ajax
-Route::get('/office/{id}', [WebController::class, 'offices_data'])
-    ->name('offices_data');
-Route::post('/event/create', [EventController::class, 'store'])
-    ->name('admin.events.store');
+Route::get('/office/{id}', [WebController::class, 'offices_data'])->name('offices_data');
+Route::get('/doctors_reservations/{id}', [WebController::class, 'doctors_reservations'])->name('doctors_reservations');
+Route::post('/event/create', [EventController::class, 'store'])->name('admin.events.store');
 
 // rutas para el admin ---------------------------------------------------------------
 Route::get('/index', [AdminController::class, 'index'])
