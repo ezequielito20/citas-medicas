@@ -6,6 +6,7 @@ use App\Models\Hour;
 use App\Models\Event;
 use App\Models\Office;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WebController extends Controller
 {
@@ -34,7 +35,9 @@ class WebController extends Controller
 
     public function doctors_reservations($id){
         try {
-            $events = Event::where('doctor_id', $id)->get();
+            $events = Event::where('doctor_id', $id)
+            ->select('id','title',DB::raw('DATE_FORMAT(start, "%Y-%m-%d") as start'),DB::raw('DATE_FORMAT(end, "%Y-%m-%d") as end'),'color')
+            ->get();
             return response()->json($events);
         } catch (\Exception $exception) {
             return response()->json(['message'=>'Error']);

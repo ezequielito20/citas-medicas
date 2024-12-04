@@ -213,6 +213,8 @@
                         Registrar cita
                     </button>
 
+                    <a href="{{url('/see_reservations',Auth::user()->id)}}" class="btn btn-success"> <i class="bi bi-eye-fill"></i> Ver las reservas</a>
+
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">

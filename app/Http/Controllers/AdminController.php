@@ -29,6 +29,10 @@ class AdminController extends Controller
         return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices','total_doctors','total_hours','offices','doctors','events'));
         
     }
+    public function see_reservations($id){
+        $events = Event::with('doctor','office')->where('user_id',$id)->get();
+        return view('admin.see_reservations', compact('events'));
+    }
 
     public function logout(Request $request){
         Auth::logout();
@@ -39,4 +43,5 @@ class AdminController extends Controller
     
         return redirect('/');
     }
+
 }

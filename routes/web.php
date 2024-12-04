@@ -24,6 +24,7 @@ Route::get('/', [WebController::class, 'index'])
 //ajax
 Route::get('/office/{id}', [WebController::class, 'offices_data'])->name('offices_data');
 Route::get('/doctors_reservations/{id}', [WebController::class, 'doctors_reservations'])->name('doctors_reservations');
+Route::get('/see_reservations/{id}', [AdminController::class, 'see_reservations'])->name('admin.see_reservations');
 Route::post('/event/create', [EventController::class, 'store'])->name('admin.events.store');
 
 // rutas para el admin ---------------------------------------------------------------
