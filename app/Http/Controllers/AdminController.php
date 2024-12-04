@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hour;
 use App\Models\User;
 use App\Models\Doctor;
+use App\Models\Event;
 use App\Models\Office;
 use App\Models\Patient;
 use App\Models\Secretary;
@@ -24,7 +25,8 @@ class AdminController extends Controller
 
         $offices = Office::all();
         $doctors = Doctor::all();
-        return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices','total_doctors','total_hours','offices','doctors'));
+        $events = Event::all();
+        return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices','total_doctors','total_hours','offices','doctors','events'));
         
     }
 

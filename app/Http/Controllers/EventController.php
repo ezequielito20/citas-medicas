@@ -93,7 +93,7 @@ class EventController extends Controller
             Event::create([
                 'title' => $validated['hour'] . " - " . $doctor->specialization,
                 'start' => $validated['date'] . " " . $validated['hour'],
-                'end' => $validated['date'],
+                'end' => $validated['date'] . " " . $validated['hour'],
                 'color' => "#ff0000",
                 'user_id' => Auth::user()->id,
                 'doctor_id' => $validated['doctor_id'],
