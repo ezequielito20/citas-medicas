@@ -24,8 +24,9 @@ class AdminController extends Controller
         $total_hours = Hour::count();
 
         $offices = Office::all();
+
         $doctors = Doctor::all();
-        $events = Event::all();
+        $events = Event::with('doctor','office')->get();
         return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices','total_doctors','total_hours','offices','doctors','events'));
         
     }

@@ -32,8 +32,6 @@
                 <tbody>
                     @php
                         $cont = 1;
-                        
-                        // list($day, $hour) = explode(' ', $event->start);
                     @endphp
                     @foreach ($events as $event)
                     @php

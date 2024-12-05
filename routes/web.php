@@ -26,7 +26,7 @@ Route::get('/', [WebController::class, 'index'])
 Route::get('/office/{id}', [WebController::class, 'offices_data'])->name('offices_data')->middleware('auth','can:offices_data');
 Route::get('/doctors_reservations/{id}', [WebController::class, 'doctors_reservations'])->name('doctors_reservations')->middleware('auth','can:doctors_reservations');
 Route::get('/see_reservations/{id}', [AdminController::class, 'see_reservations'])->name('admin.see_reservations')->middleware('auth','can:admin.see_reservations');
-Route::post('/event/create', [EventController::class, 'store'])->name('admin.events.store')->middleware('auth','can:admin.users.store');
+Route::post('/event/create', [EventController::class, 'store'])->name('admin.events.store')->middleware('auth','can:admin.events.store');
 Route::get('/events/{id}/delete', [EventController::class, 'destroy'])
     ->name('admin.events.destroy')->middleware('auth','can:admin.events.destroy');
 
