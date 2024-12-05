@@ -103,6 +103,22 @@
                 </div>
             </div>
         @endcan
+        @can('admin.hours.index')
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box" style="background-color: #f66161;">
+                    <div class="inner">
+                        <h3>{{ $total_events }}</h3>
+                        <p>{{ $total_events === 1 ? 'Evento' : 'Eventos' }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion fas bi bi-calendar-event-fill"></i>
+                    </div>
+                    <a href="" class="small-box-footer"> <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        @endcan
         @can('offices_data')
             <div class="row col-md-12">
                 <div class=" justify-content-center col-md-12">
@@ -435,134 +451,136 @@
             @endif
         @endcan
     </div>
-    <div class="row">
-        <div class="row col-md-12">
-            <div class=" justify-content-center col-md-12">
-                <div class="card card-outline card-primary ">
-                    <div class="card-header">
-                        <h3 class="card-title">Calendario de Reservas</h3><br>
-                        <hr>
-                    </div>
-                    <div class="card-body">
-                        <table id="example1" class="table table-bordered table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="text-align: center;">#</th>
-                                    <th scope="col" style="text-align: center;">Usuario</th>
-                                    <th scope="col" style="text-align: center;">Fecha de Reserva</th>
-                                    <th scope="col" style="text-align: center;">Hora de Reserva</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $cont = 1;
-                                @endphp
-                                {{ Auth::user()->doctor->names }}
-                                @foreach ($events as $event)
-                                    @if (Auth::user->doctor->id == $event->doctor_id)
-                                    @php
-                                        [$day, $hour] = explode(' ', $event->start);
-                                    @endphp
-                                    <tr style="text-align: center;">
-                                        <th scope="row" >{{ $cont++ }}</th>
-                                        <td>{{ $event->user->name }}</td>
-                                        <td>{{ $day }}</td>
-                                        <td>{{ $hour }}</td>
-
-                                        
+    @if (Auth::check() && Auth::user()->roles->first()->name == 'doctor')
+        <div class="row">
+            <div class="row col-md-12">
+                <div class=" justify-content-center col-md-12">
+                    <div class="card card-outline card-primary ">
+                        <div class="card-header">
+                            <h3 class="card-title">Calendario de Reservas</h3><br>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="text-align: center;">#</th>
+                                        <th scope="col" style="text-align: center;">Usuario</th>
+                                        <th scope="col" style="text-align: center;">Fecha de Reserva</th>
+                                        <th scope="col" style="text-align: center;">Hora de Reserva</th>
                                     </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <!-- Script para la alerta de confirmación -->
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                // Seleccionar todos los enlaces de eliminación
-                                const deleteLinks = document.querySelectorAll('.delete-link');
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $cont = 1;
+                                    @endphp
+                                    @foreach ($events as $event)
+                                        @if (Auth::user()->doctor->id == $event->doctor_id)
+                                            @php
+                                                [$day, $hour] = explode(' ', $event->start);
+                                            @endphp
+                                            <tr style="text-align: center;">
+                                                <th scope="row">{{ $cont++ }}</th>
+                                                <td>{{ $event->user->name }}</td>
+                                                <td>{{ $day }}</td>
+                                                <td>{{ $hour }}</td>
 
-                                deleteLinks.forEach(link => {
-                                    link.addEventListener('click', function(e) {
-                                        e.preventDefault(); // Evita el redireccionamiento inmediato
 
-                                        const deleteUrl = this.getAttribute('href'); // Obtiene la URL de eliminación
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <!-- Script para la alerta de confirmación -->
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // Seleccionar todos los enlaces de eliminación
+                                    const deleteLinks = document.querySelectorAll('.delete-link');
 
-                                        // Muestra la alerta de confirmación
-                                        Swal.fire({
-                                            title: '¿Estás seguro?',
-                                            text: "No podrás revertir esto",
-                                            icon: 'warning',
-                                            showCancelButton: true,
-                                            confirmButtonColor: '#3085d6',
-                                            cancelButtonColor: '#d33',
-                                            confirmButtonText: 'Sí, eliminar',
-                                            cancelButtonText: 'Cancelar'
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                // Si el usuario confirma, redirige a la URL de eliminación
-                                                window.location.href = deleteUrl;
-                                            }
+                                    deleteLinks.forEach(link => {
+                                        link.addEventListener('click', function(e) {
+                                            e.preventDefault(); // Evita el redireccionamiento inmediato
+
+                                            const deleteUrl = this.getAttribute('href'); // Obtiene la URL de eliminación
+
+                                            // Muestra la alerta de confirmación
+                                            Swal.fire({
+                                                title: '¿Estás seguro?',
+                                                text: "No podrás revertir esto",
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#3085d6',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Sí, eliminar',
+                                                cancelButtonText: 'Cancelar'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    // Si el usuario confirma, redirige a la URL de eliminación
+                                                    window.location.href = deleteUrl;
+                                                }
+                                            });
                                         });
                                     });
                                 });
-                            });
-                        </script>
-                        <script>
-                            $(function() {
-                                $("#example1").DataTable({
-                                    "pageLength": 10,
-                                    "language": {
-                                        "emptyTable": "No hay información",
-                                        "info": "Mostrando START a END de TOTAL Reservas",
-                                        "infoEmpty": "Mostrando 0 a 0 de 0 Reservas",
-                                        "infoFiltered": "(Filtrado de MAX total Reservas)",
-                                        "infoPostFix": "",
-                                        "thousands": ",",
-                                        "lengthMenu": "Mostrar MENU Reservas",
-                                        "loadingRecords": "Cargando...",
-                                        "processing": "Procesando...",
-                                        "search": "Buscador:",
-                                        "zeroRecords": "Sin resultados encontrados",
-                                        "paginate": {
-                                            "first": "Primero",
-                                            "last": "Ultimo",
-                                            "next": "Siguiente",
-                                            "previous": "Anterior"
-                                        }
-                                    },
-                                    "responsive": true,
-                                    "lengthChange": true,
-                                    "autoWidth": false,
-                                    buttons: [{
-                                            extend: 'collection',
-                                            text: 'Reportes',
-                                            orientation: 'landscape',
-                                            buttons: [{
-                                                text: 'Copiar',
-                                                extend: 'copy',
-                                            }, {
-                                                extend: 'pdf'
-                                            }, {
-                                                extend: 'csv'
-                                            }, {
-                                                extend: 'excel'
-                                            }, {
-                                                text: 'Imprimir',
-                                                extend: 'print'
-                                            }]
+                            </script>
+                            <script>
+                                $(function() {
+                                    $("#example1").DataTable({
+                                        "pageLength": 10,
+                                        "language": {
+                                            "emptyTable": "No hay información",
+                                            "info": "Mostrando START a END de TOTAL Reservas",
+                                            "infoEmpty": "Mostrando 0 a 0 de 0 Reservas",
+                                            "infoFiltered": "(Filtrado de MAX total Reservas)",
+                                            "infoPostFix": "",
+                                            "thousands": ",",
+                                            "lengthMenu": "Mostrar MENU Reservas",
+                                            "loadingRecords": "Cargando...",
+                                            "processing": "Procesando...",
+                                            "search": "Buscador:",
+                                            "zeroRecords": "Sin resultados encontrados",
+                                            "paginate": {
+                                                "first": "Primero",
+                                                "last": "Ultimo",
+                                                "next": "Siguiente",
+                                                "previous": "Anterior"
+                                            }
                                         },
-                                        {
-                                            extend: 'colvis',
-                                            text: 'Visor de columnas',
-                                            collectionLayout: 'fixed three-column'
-                                        }
-                                    ],
-                                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-                            });
-                        </script>
+                                        "responsive": true,
+                                        "lengthChange": true,
+                                        "autoWidth": false,
+                                        buttons: [{
+                                                extend: 'collection',
+                                                text: 'Reportes',
+                                                orientation: 'landscape',
+                                                buttons: [{
+                                                    text: 'Copiar',
+                                                    extend: 'copy',
+                                                }, {
+                                                    extend: 'pdf'
+                                                }, {
+                                                    extend: 'csv'
+                                                }, {
+                                                    extend: 'excel'
+                                                }, {
+                                                    text: 'Imprimir',
+                                                    extend: 'print'
+                                                }]
+                                            },
+                                            {
+                                                extend: 'colvis',
+                                                text: 'Visor de columnas',
+                                                collectionLayout: 'fixed three-column'
+                                            }
+                                        ],
+                                    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                                });
+                            </script>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
+
 @endsection()

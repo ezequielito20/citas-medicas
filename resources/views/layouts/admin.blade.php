@@ -211,6 +211,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                         @endcan
+                        @can('admin.hours.index')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas bi bi-wrench-adjustable"></i>
+                                <p>
+                                    Configuraciones
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('configurations') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Configuraciones</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endcan
                         <li class="nav-item">
                             <a href="{{ url('logout') }}" class="nav-link">
                                 <i class="nav-icon fas bi bi-box-arrow-right"></i>

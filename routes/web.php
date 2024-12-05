@@ -2,15 +2,16 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebController;
 use App\Http\Controllers\HourController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SecretaryController;
-use App\Http\Controllers\WebController;
+use App\Http\Controllers\ConfigurationController;
 
 Auth::routes();
 Route::get('/logout', [AdminController::class, 'logout'])
@@ -215,3 +216,31 @@ Route::get('/hours/offices/{id}', [HourController::class, 'offices_data'])
     ->name('admin.hours.offices_data')
     ->middleware('auth','can:admin.hours.offices_data');
 
+// rutas para el admin - configurations----------------------------------------------------------
+Route::get('/configurations', [ConfigurationController::class, 'index'])
+    ->name('admin.configurations.index')
+    ->middleware('auth','can:admin.configurations.index');
+
+Route::get('/configurations/create', [ConfigurationController::class, 'create'])
+    ->name('admin.configurations.create')
+    ->middleware('auth','can:admin.configurations.create');
+
+Route::post('/configurations/create', [ConfigurationController::class, 'store'])
+    ->name('admin.configurations.store')
+    ->middleware('auth','can:admin.configurations.store');
+
+Route::get('/configurations/{id}', [ConfigurationController::class, 'show'])
+    ->name('admin.configurations.show')
+    ->middleware('auth','can:admin.configurations.show');
+
+Route::get('/configurations/{id}/edit', [ConfigurationController::class, 'edit'])
+    ->name('admin.configurations.edit')
+    ->middleware('auth','can:admin.configurations.edit');
+
+Route::put('/configurations/{id}', [ConfigurationController::class, 'update'])
+    ->name('admin.configurations.update')
+    ->middleware('auth','can:admin.configurations.update');
+
+Route::get('/configurations/{id}/delete', [ConfigurationController::class, 'destroy'])
+    ->name('admin.configurations.destroy')
+    ->middleware('auth','can:admin.configs.destroy');
