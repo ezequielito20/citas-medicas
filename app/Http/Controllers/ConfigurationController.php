@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Configuration;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreConfigurationRequest;
 use App\Http\Requests\UpdateConfigurationRequest;
 
@@ -13,7 +15,8 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
-        //
+        $configurations = Configuration::all();
+        return view('admin.configurations.index', compact('configurations'));
     }
 
     /**
@@ -21,16 +24,59 @@ class ConfigurationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.configurations.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreConfigurationRequest $request)
+    public function store(Request $request)
     {
-        //
+        // Validar los datos del formulario
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'required|email|unique:configurations,email',
+            'logo' => 'nullable|max:2048', // Máx 2MB para archivos de imagen
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'address.required' => 'La dirección es obligatoria.',
+            'email.required' => 'El correo es obligatorio.',
+            'email.unique' => 'El correo ya está registrado.',
+            'logo.max' => 'El logo no debe superar los 2MB.',
+        ]);
+
+        try {
+            // Manejar la carga del logo si está presente
+            $logoPath = null;
+            if ($request->hasFile('logo')) {
+                $logoPath = $request->file('logo')->store('logos', 'public');
+            }
+
+            // Crear la configuración con los datos validados
+            Configuration::create([
+                'name' => $validated['name'],
+                'address' => $validated['address'],
+                'phone' => $validated['phone'],
+                'email' => $validated['email'],
+                'logo' => $logoPath ?? '', // Ruta del logo o vacío si no se cargó
+            ]);
+
+            // Redirigir con mensaje de éxito
+            return redirect()->route('admin.configurations.index')
+                ->with('message', 'Configuración creada correctamente.')
+                ->with('icons', 'success');
+        } catch (\Exception $e) {
+            // Manejar errores y redirigir con mensaje de error
+            Log::error('Error al crear configuración: ' . $e->getMessage());
+
+            return redirect()->route('admin.configurations.create')
+                ->with('message', 'Hubo un problema al crear la configuración: ' . $e->getMessage())
+                ->with('icons', 'error');
+        }
     }
+
 
     /**
      * Display the specified resource.

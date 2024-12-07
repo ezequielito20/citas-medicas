@@ -9,4 +9,12 @@ class Configuration extends Model
 {
     /** @use HasFactory<\Database\Factories\ConfigurationFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'address',
+        'phone',
+        'email',
+        'logo',
+    ];
 }
