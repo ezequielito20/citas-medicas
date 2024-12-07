@@ -243,4 +243,4 @@ Route::put('/configurations/{id}', [ConfigurationController::class, 'update'])
 
 Route::get('/configurations/{id}/delete', [ConfigurationController::class, 'destroy'])
     ->name('admin.configurations.destroy')
-    ->middleware('auth','can:admin.configs.destroy');
+    ->middleware('auth','can:admin.configurations.destroy');
