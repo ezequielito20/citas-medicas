@@ -172,6 +172,9 @@ class ConfigurationController extends Controller
     public function destroy($id)
     {
         $configuration = Configuration::findOrFail($id);
+        if ($configuration->logo && Storage::disk('public')->exists($configuration->logo)) {
+            Storage::disk('public')->delete($configuration->logo);
+        }
         $configuration->delete();
         return redirect()->route('admin.configurations.index')
         ->with('message', 'Configuración eliminada correctamente.')
