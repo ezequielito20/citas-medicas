@@ -83,9 +83,10 @@ class ConfigurationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Configuration $configuration)
+    public function show($id)
     {
-        //
+        $configuration = Configuration::findOrFail($id);
+        return view('admin.configurations.show', compact('configuration'));
     }
 
     /**

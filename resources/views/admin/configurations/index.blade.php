@@ -41,7 +41,9 @@
                             <td>{{ $configuration->address }}</td>
                             <td>{{ $configuration->phone }}</td>
                             <td>{{ $configuration->email }}</td>
-                            <td>{{ $configuration->logo }}</td>
+                            <td>
+                                <img src="{{ asset('storage/' . $configuration->logo) }}" alt="logo" width="70px">
+                            </td>
                             <td style="text-align: center;">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ url('configurations/' . $configuration->id) }}" class="btn btn-info"><i
