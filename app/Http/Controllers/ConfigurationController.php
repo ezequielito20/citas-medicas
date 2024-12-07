@@ -7,6 +7,8 @@ use App\Models\Configuration;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreConfigurationRequest;
 use App\Http\Requests\UpdateConfigurationRequest;
+use Illuminate\Support\Facades\Storage;
+
 
 class ConfigurationController extends Controller
 {
@@ -38,20 +40,20 @@ class ConfigurationController extends Controller
             'address' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
             'email' => 'required|email|unique:configurations,email',
-            'logo' => 'nullable|max:2048', // Máx 2MB para archivos de imagen
+            'file' => 'nullable|max:2048', // Máx 2MB para archivos de imagen
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'address.required' => 'La dirección es obligatoria.',
             'email.required' => 'El correo es obligatorio.',
             'email.unique' => 'El correo ya está registrado.',
-            'logo.max' => 'El logo no debe superar los 2MB.',
+            'file.max' => 'El logo no debe superar los 2MB.',
         ]);
 
         try {
             // Manejar la carga del logo si está presente
             $logoPath = null;
-            if ($request->hasFile('logo')) {
-                $logoPath = $request->file('logo')->store('logos', 'public');
+            if ($request->hasFile('file')) {
+                $logoPath = $request->file('file')->store('files', 'public');
             }
 
             // Crear la configuración con los datos validados
