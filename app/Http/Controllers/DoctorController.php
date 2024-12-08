@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+use App\Models\Configuration;
 
 class DoctorController extends Controller
 {
@@ -192,7 +193,9 @@ class DoctorController extends Controller
     }
 
     public function pdf(){
-        $pdf = \PDF::loadView('admin.doctors.pdf');
+        $doctors = Doctor::with('user')->get();
+        $configuration = Configuration::latest()->first();
+        $pdf = \PDF::loadView('admin.doctors.pdf', compact('configuration', 'doctors'));
         return $pdf->stream();
     }
 }

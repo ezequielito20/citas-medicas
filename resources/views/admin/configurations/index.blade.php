@@ -35,7 +35,7 @@
                         $cont = 1;
                     @endphp
                     @foreach ($configurations as $configuration)
-                        <tr>
+                        <tr style="text-align: center;">
                             <th scope="row" style="text-align: center;">{{ $cont++ }}</th>
                             <td>{{ $configuration->name }}</td>
                             <td>{{ $configuration->address }}</td>
