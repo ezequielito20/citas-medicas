@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Hour;
 use App\Models\User;
 use App\Models\Doctor;
@@ -184,5 +185,14 @@ class DoctorController extends Controller
         return redirect()->route('admin.doctors.index')
         ->with('message', 'Doctor eliminado correctamente.')
         ->with('icons', 'success');
+    }
+
+    public function reports(){
+        return view('admin.doctors.reports');
+    }
+
+    public function pdf(){
+        $pdf = \PDF::loadView('admin.doctors.pdf');
+        return $pdf->stream();
     }
 }

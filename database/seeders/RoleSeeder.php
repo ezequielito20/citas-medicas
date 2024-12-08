@@ -68,6 +68,9 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.doctors.edit'])->syncRoles([$admin, $secretary]);
         Permission::create(['name' => 'admin.doctors.update'])->syncRoles([$admin, $secretary]);
         Permission::create(['name' => 'admin.doctors.destroy'])->syncRoles([$admin, $secretary]);
+        //Reportes
+        Permission::create(['name' => 'admin.doctors.reports'])->syncRoles([$admin, $secretary]);
+        Permission::create(['name' => 'admin.doctors.pdf'])->syncRoles([$admin, $secretary]);
 
         //------Rutas para el admin Hours ------------------
         Permission::create(['name' => 'admin.hours.index'])->syncRoles([$admin, $secretary]);
