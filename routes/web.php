@@ -166,6 +166,17 @@ Route::post('/doctors/create', [DoctorController::class, 'store'])
     ->name('admin.doctors.store')
     ->middleware('auth','can:admin.doctors.store');
 
+    //Reportes -----------------------
+Route::get('/doctors/pdf', [DoctorController::class, 'pdf'])
+->name('admin.doctors.pdf')
+->middleware('auth','can:admin.doctors.pdf');
+
+Route::get('/doctors/reports', [DoctorController::class, 'reports'])
+->name('admin.doctors.reports')
+->middleware('auth','can:admin.doctors.reports');
+
+    // --------------------------------------
+
 Route::get('/doctors/{id}', [DoctorController::class, 'show'])
     ->name('admin.doctors.show')
     ->middleware('auth','can:admin.doctors.show');
@@ -181,6 +192,8 @@ Route::put('/doctors/{id}', [DoctorController::class, 'update'])
 Route::get('/doctors/{id}/delete', [DoctorController::class, 'destroy'])
     ->name('admin.doctors.destroy')
     ->middleware('auth','can:admin.doctors.destroy');
+
+    
 
 // rutas para el admin - hours----------------------------------------------------------
 Route::get('/hours', [HourController::class, 'index'])
@@ -243,4 +256,4 @@ Route::put('/configurations/{id}', [ConfigurationController::class, 'update'])
 
 Route::get('/configurations/{id}/delete', [ConfigurationController::class, 'destroy'])
     ->name('admin.configurations.destroy')
-    ->middleware('auth','can:admin.configs.destroy');
+    ->middleware('auth','can:admin.configurations.destroy');

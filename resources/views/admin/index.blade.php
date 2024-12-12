@@ -119,6 +119,22 @@
                 </div>
             </div>
         @endcan
+        @can('admin.hours.index')
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box" style="background-color: #6f83f3;">
+                    <div class="inner">
+                        <h3>{{ $total_configurations }}</h3>
+                        <p>{{ $total_configurations === 1 ? 'Configuración' : 'Configuraciones' }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion fas bi bi-wrench-adjustable"></i>
+                    </div>
+                    <a href="{{ url('configurations') }}" class="small-box-footer">Mas Información <i
+                        class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        @endcan
         @can('offices_data')
             <div class="row col-md-12">
                 <div class=" justify-content-center col-md-12">

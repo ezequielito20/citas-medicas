@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Hour;
 use App\Models\User;
-use App\Models\Doctor;
 use App\Models\Event;
+use App\Models\Doctor;
 use App\Models\Office;
 use App\Models\Patient;
 use App\Models\Secretary;
 use Illuminate\Http\Request;
+use App\Models\Configuration;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -22,6 +23,7 @@ class AdminController extends Controller
         $total_offices = Office::count();
         $total_doctors = Doctor::count();
         $total_hours = Hour::count();
+        $total_configurations = Configuration::count();
 
 
         $offices = Office::all();
@@ -29,7 +31,7 @@ class AdminController extends Controller
         $doctors = Doctor::all();
         $events = Event::with('doctor','office')->get();
         $total_events = $events->count();
-        return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices','total_doctors','total_hours','offices','doctors','events','total_events'));
+        return view('admin.index', compact('total_users','total_secretaries','total_patients','total_offices','total_doctors','total_hours','offices','doctors','events','total_events','total_configurations'));
         
     }
     public function see_reservations($id){

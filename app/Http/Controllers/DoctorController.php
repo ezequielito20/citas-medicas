@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Hour;
 use App\Models\User;
 use App\Models\Doctor;
 use App\Models\Office;
 use Illuminate\Http\Request;
+use App\Models\Configuration;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 
@@ -184,5 +187,31 @@ class DoctorController extends Controller
         return redirect()->route('admin.doctors.index')
         ->with('message', 'Doctor eliminado correctamente.')
         ->with('icons', 'success');
+    }
+
+    public function reports(){
+        return view('admin.doctors.reports');
+    }
+
+    public function pdf()
+    {
+        $doctors = Doctor::with('user')->get();
+        $configuration = Configuration::latest()->first();
+        
+        $pdf = \PDF::loadView('admin.doctors.pdf', compact('configuration', 'doctors'));
+        
+        // Obtener el objeto DOMPDF
+        $pdf->output();
+        $dompdf = $pdf->getDomPDF();
+        $canvas = $dompdf->getCanvas();
+        
+        // Agregar número de página y fecha en el pie de página
+        $canvas->page_text(20, 800, "Impreso por: " . Auth::user()->name, null, 10, array(0,0,0));
+        $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
+        
+        $canvas->page_text(490, 800, "Fecha: " . \Carbon\Carbon::now()->format('d/m/Y'), null, 10,array(0,0,0) 
+        );
+
+        return $pdf->stream();
     }
 }
