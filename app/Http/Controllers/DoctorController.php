@@ -208,8 +208,7 @@ class DoctorController extends Controller
         // Agregar número de página y fecha en el pie de página
         $canvas->page_text(20, 800, "Impreso por: " . Auth::user()->name, null, 10, array(0,0,0));
         $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
-        
-        $canvas->page_text(490, 800, "Fecha: " . \Carbon\Carbon::now()->format('d/m/Y'), null, 10,array(0,0,0) 
+        $canvas->page_text(450, 800, "Fecha: " . \Carbon\Carbon::now()->format('d/m/Y')." ". \Carbon\Carbon::now()->format('H:i:s'), null, 10,array(0,0,0) 
         );
 
         return $pdf->stream();

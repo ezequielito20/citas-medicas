@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateEventRequest;
 use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EventController extends Controller
 {
@@ -148,5 +149,44 @@ class EventController extends Controller
         return redirect()->to(url()->previous())
         ->with('message', 'Evento eliminado correctamente.')
         ->with('icons', 'success');
+    }
+
+    /**
+     * Display the reports view for events/reservations.
+     */
+    public function reports()
+    {
+        $events = Event::with(['user', 'doctor', 'office'])
+            ->orderBy('start', 'desc')
+            ->get();
+
+        // Agrupar eventos por mes
+        $eventsByMonth = $events->groupBy(function($event) {
+            return Carbon::parse($event->start)->format('Y-m');
+        });
+
+        // Estadísticas generales
+        $statistics = [
+            'total_events' => $events->count(),
+            'current_month_events' => $events->where('start', '>=', Carbon::now()->startOfMonth())->count(),
+            'upcoming_events' => $events->where('start', '>=', Carbon::now())->count(),
+            'past_events' => $events->where('start', '<', Carbon::now())->count(),
+        ];
+
+        return view('admin.events.reports', compact('events', 'eventsByMonth', 'statistics'));
+    }
+
+    /**
+     * Generate PDF report for events/reservations.
+     */
+    public function pdf()
+    {
+        $events = Event::with(['user', 'doctor', 'office'])
+            ->orderBy('start', 'desc')
+            ->get();
+
+        $pdf = PDF::loadView('admin.events.pdf', compact('events'));
+        
+        return $pdf->download('reservaciones-reporte.pdf');
     }
 }

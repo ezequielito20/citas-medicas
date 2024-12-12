@@ -257,3 +257,12 @@ Route::put('/configurations/{id}', [ConfigurationController::class, 'update'])
 Route::get('/configurations/{id}/delete', [ConfigurationController::class, 'destroy'])
     ->name('admin.configurations.destroy')
     ->middleware('auth','can:admin.configurations.destroy');
+
+//Reportes de reservaciones -----------------------
+Route::get('/reservations/pdf', [EventController::class, 'pdf'])
+    ->name('admin.reservations.pdf')
+    ->middleware('auth','can:admin.reservations.pdf');
+
+Route::get('/reservations/reports', [EventController::class, 'reports'])
+    ->name('admin.reservations.reports')
+    ->middleware('auth','can:admin.reservations.reports');
