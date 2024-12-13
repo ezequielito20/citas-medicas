@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Hour;
 use App\Models\Event;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use App\Models\Configuration;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateEventRequest;
 use Illuminate\Validation\ValidationException;
-use Carbon\Carbon;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class EventController extends Controller
 {
@@ -179,14 +179,53 @@ class EventController extends Controller
     /**
      * Generate PDF report for events/reservations.
      */
-    public function pdf()
+    public function pdf(Request $request)
     {
-        $events = Event::with(['user', 'doctor', 'office'])
-            ->orderBy('start', 'desc')
-            ->get();
+        $query = Event::with(['user', 'doctor', 'office']);
+        $configuration = Configuration::latest()->first();
 
-        $pdf = PDF::loadView('admin.events.pdf', compact('events'));
+        // Si vienen fechas del formulario de rango
+        if ($request->has(['start_date', 'end_date'])) {
+            $query->whereBetween('start', [
+                $request->start_date . ' 00:00:00',
+                $request->end_date . ' 23:59:59'
+            ]);
+        } else {
+            // Si no vienen fechas, manejamos los otros tipos de reporte
+            switch($request->type) {
+                case 'all':
+                    // Listado completo
+                    $query->orderBy('start', 'desc');
+                    break;
+                case 'dates':
+                    // Reporte por fechas (último mes por defecto)
+                    $startDate = now()->startOfMonth();
+                    $endDate = now()->endOfMonth();
+                    $query->whereBetween('start', [$startDate, $endDate]);
+                    break;
+                default:
+                    // Reporte normal (actual)
+                    $query->whereMonth('start', now()->month)
+                          ->whereYear('start', now()->year);
+            }
+        }
+
+        $events = $query->orderBy('start', 'asc')->get();
         
-        return $pdf->download('reservaciones-reporte.pdf');
+        $pdf = \PDF::loadView('admin.events.pdf', compact('events', 'configuration'));
+        
+        // Personalizar el nombre del archivo según el tipo de reporte
+        $fileName = 'reservaciones';
+        if ($request->has(['start_date', 'end_date'])) {
+            $fileName .= '-del-' . $request->start_date . '-al-' . $request->end_date;
+        } elseif ($request->type == 'all') {
+            $fileName .= '-completo';
+        } elseif ($request->type == 'dates') {
+            $fileName .= '-mes-actual';
+        }
+        
+        // return $pdf->download($fileName . '.pdf');
+        return $pdf->stream();
     }
 }
+
