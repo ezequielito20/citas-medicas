@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Carbon\Carbon;
 use App\Models\Hour;
 use App\Models\Event;
@@ -212,7 +213,7 @@ class EventController extends Controller
 
         $events = $query->orderBy('start', 'asc')->get();
         
-        $pdf = \PDF::loadView('admin.events.pdf', compact('events', 'configuration'));
+        $pdf = PDF::loadView('admin.events.pdf', compact('events', 'configuration'));
         
         // Personalizar el nombre del archivo según el tipo de reporte
         $fileName = 'reservaciones';

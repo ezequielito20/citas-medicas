@@ -99,7 +99,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">
                         {{ \Carbon\Carbon::createFromFormat('Y-m', $month)->format('F Y') }}
                         <span class="badge badge-secondary">{{ count($monthEvents) }} {{ count($monthEvents) == 1 ? 'reservación' : 'reservaciones' }}</span>
-                    </h6>
+                  </h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
