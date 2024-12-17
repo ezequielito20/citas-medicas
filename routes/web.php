@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\SecretaryController;
 use App\Http\Controllers\ConfigurationController;
 
@@ -257,6 +258,39 @@ Route::put('/configurations/{id}', [ConfigurationController::class, 'update'])
 Route::get('/configurations/{id}/delete', [ConfigurationController::class, 'destroy'])
     ->name('admin.configurations.destroy')
     ->middleware('auth','can:admin.configurations.destroy');
+
+// rutas para el admin - historial----------------------------------------------------------
+Route::get('/historial', [HistorialController::class, 'index'])
+    ->name('admin.historial.index')
+    ->middleware('auth','can:admin.historial.index');
+
+Route::get('/historial/create', [HistorialController::class, 'create'])
+    ->name('admin.historial.create')
+    ->middleware('auth','can:admin.historial.create');
+
+Route::get('/historial/pdf', [HistorialController::class, 'pdf'])
+    ->name('admin.historial.pdf')
+    ->middleware('auth','can:admin.historial.pdf');
+
+Route::post('/historial/create', [HistorialController::class, 'store'])
+    ->name('admin.historial.store')
+    ->middleware('auth','can:admin.historial.store');
+
+Route::get('/historial/{id}', [HistorialController::class, 'show'])
+    ->name('admin.historial.show')
+    ->middleware('auth','can:admin.historial.show');
+
+Route::get('/historial/{id}/edit', [HistorialController::class, 'edit'])
+    ->name('admin.historial.edit')
+    ->middleware('auth','can:admin.historial.edit');
+
+Route::put('/historial/{id}', [HistorialController::class, 'update'])
+    ->name('admin.historial.update')
+    ->middleware('auth','can:admin.historial.update');
+
+Route::get('/historial/{id}/delete', [HistorialController::class, 'destroy'])
+    ->name('admin.historial.destroy')
+    ->middleware('auth','can:admin.historial.destroy');
 
 //Reportes de reservaciones -----------------------
 Route::get('/reservations/pdf', [EventController::class, 'pdf'])

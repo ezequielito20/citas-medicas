@@ -258,6 +258,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                         @endcan
+
+                        @can('admin.historial.index')
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas bi bi-clipboard2-pulse"></i>
+                                <p>
+                                    Historial Clínico
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('historial') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Listado de Historiales</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endcan
                         <li class="nav-item">
                             <a href="{{ url('logout') }}" class="nav-link">
                                 <i class="nav-icon fas bi bi-box-arrow-right"></i>

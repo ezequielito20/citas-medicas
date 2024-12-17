@@ -38,4 +38,9 @@ class Doctor extends Model
     public function events(){
         return $this->hasMany(Event::class);
     }
+
+    public function historial()
+    {
+        return $this->hasMany(Historial::class);
+    }
 }

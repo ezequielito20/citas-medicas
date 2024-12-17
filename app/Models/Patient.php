@@ -27,4 +27,9 @@ class Patient extends Model
         'observations',
         'address',
     ];
+
+    public function historial()
+    {
+        return $this->hasMany(Historial::class);
+    }
 }
