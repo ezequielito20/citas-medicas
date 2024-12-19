@@ -145,22 +145,22 @@ class HistorialController extends Controller
         return view('admin.historial.reports');
     }
 
-    public function pdf()
+    public function pdf($id)
     {
-        $historiales = Historial::with(['patient', 'doctor'])->get();
+        $historial = Historial::findOrFail($id);
         $configuration = Configuration::latest()->first();
         
-        $pdf = \PDF::loadView('admin.historial.pdf', compact('configuration', 'historiales'));
+        $pdf = \PDF::loadView('admin.historial.pdf', compact('configuration', 'historial'));
         
-        // Obtener el objeto DOMPDF
-        $pdf->output();
-        $dompdf = $pdf->getDomPDF();
-        $canvas = $dompdf->getCanvas();
+        // // Obtener el objeto DOMPDF
+        // $pdf->output();
+        // $dompdf = $pdf->getDomPDF();
+        // $canvas = $dompdf->getCanvas();
         
-        // Agregar número de página y fecha en el pie de página
-        $canvas->page_text(20, 800, "Impreso por: " . Auth::user()->name, null, 10, array(0,0,0));
-        $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
-        $canvas->page_text(450, 800, "Fecha: " . \Carbon\Carbon::now()->format('d/m/Y')." ". \Carbon\Carbon::now()->format('H:i:s'), null, 10, array(0,0,0));
+        // // Agregar número de página y fecha en el pie de página
+        // $canvas->page_text(20, 800, "Impreso por: " . Auth::user()->name, null, 10, array(0,0,0));
+        // $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
+        // $canvas->page_text(450, 800, "Fecha: " . \Carbon\Carbon::now()->format('d/m/Y')." ". \Carbon\Carbon::now()->format('H:i:s'), null, 10, array(0,0,0));
 
         return $pdf->stream();
     }

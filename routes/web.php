@@ -268,7 +268,7 @@ Route::get('/historial/create', [HistorialController::class, 'create'])
     ->name('admin.historial.create')
     ->middleware('auth','can:admin.historial.create');
 
-Route::get('/historial/pdf', [HistorialController::class, 'pdf'])
+Route::get('/historial/pdf/{id}', [HistorialController::class, 'pdf'])
     ->name('admin.historial.pdf')
     ->middleware('auth','can:admin.historial.pdf');
 
