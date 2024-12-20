@@ -47,7 +47,7 @@
                                                 class="bi bi-eye"></i></a>
                                         <a href="{{ url('historial/' . $historial->id . '/edit') }}"
                                             class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
-                                        <a href="{{ url('historial/pdf/' . $historial->id ) }}"
+                                        <a href="{{ url('historial/patient/' . $historial->id ) }}"
                                             class="btn btn-secondary btn-sm"><i class="bi bi-printer"></i></a>
                                         <a href="{{ url('historial/' . $historial->id . '/delete') }}"
                                             class="btn btn-danger btn-sm delete-link"><i class="bi bi-trash"></i></a>

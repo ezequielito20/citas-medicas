@@ -17,7 +17,6 @@
             </div>
             <div class="card-body">
                <form action="{{ route('admin.historial.search_patient') }}" method="GET">
-                  @csrf
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -43,7 +42,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 text-right">
-                            <button type="button" id="clearBtn" class="btn btn-secondary mr-2">
+                            <button type="button" id="clearBtn" class="btn btn-secondary mr-2 btn-clear">
                                 <i class="fas fa-eraser"></i> Limpiar
                             </button>
                             <button type="submit" class="btn btn-primary">
@@ -63,7 +62,7 @@
         </div>
 
         <!-- Resultados de la búsqueda -->
-        <div id="searchResults">
+        <div id="searchResults" class="search-results-container">
             @if(isset($patients))
                 @if($patients->count() > 0)
                     @foreach($patients as $patient)
@@ -74,7 +73,7 @@
                                 </h6>
                                 <div>
                                     <span class="mr-3">CI: {{ $patient->ci }}</span>
-                                    <a href="{{ route('admin.historial.pdf', $patient->id) }}" 
+                                    <a href="{{ route('admin.historial.print_historial', $patient->id) }}" 
                                        class="btn btn-light btn-sm" 
                                        target="_blank">
                                         <i class="fas fa-file-pdf"></i> Generar PDF
@@ -148,62 +147,16 @@
     </div>
 @endsection
 
-@push('scripts')
 <script>
-$(document).ready(function() {
-    // Manejar el envío del formulario
-    $('#searchForm').on('submit', function(e) {
-        e.preventDefault();
+    document.addEventListener('DOMContentLoaded', function() {
+        const clearBtn = document.getElementById('clearBtn');
         
-        const formData = {
-            ci: $('#ci').val(),
-            names: $('#names').val(),
-            last_names: $('#last_names').val()
-        };
-
-        // Verificar si al menos un campo tiene contenido
-        if (!formData.ci && !formData.names && !formData.last_names) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Atención',
-                text: 'Por favor, ingrese al menos un criterio de búsqueda'
-            });
-            return;
-        }
-
-        // Mostrar loader
-        $('#loader').removeClass('d-none');
-        $('#searchResults').html('');
-
-        // Realizar la búsqueda
-        $.ajax({
-            url: "{{ route('admin.historial.search_patient') }}",
-            method: 'GET',
-            data: formData,
-            success: function(response) {
-                $('#loader').addClass('d-none');
-                $('#searchResults').html(response);
-            },
-            error: function(xhr) {
-                $('#loader').addClass('d-none');
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ocurrió un error al realizar la búsqueda'
-                });
-                console.error('Error en la búsqueda:', xhr);
-            }
+        clearBtn.addEventListener('click', function() {
+            // Redireccionar a la ruta base de búsqueda sin parámetros
+            window.location.href = "{{ route('admin.historial.search_patient') }}";
         });
     });
-
-    // Limpiar formulario
-    $('#clearBtn').click(function() {
-        $('#searchForm')[0].reset();
-        $('#searchResults').html('');
-    });
-});
 </script>
-@endpush
 
 @push('styles')
 <style>

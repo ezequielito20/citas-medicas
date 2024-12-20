@@ -296,8 +296,7 @@ Route::get('/historial/{id}/delete', [HistorialController::class, 'destroy'])
     ->name('admin.historial.destroy')
     ->middleware('auth','can:admin.historial.destroy');
 
-
-Route::put('/historial/patient/{id}', [HistorialController::class, 'print_historial'])
+Route::get('/historial/patient/{id}', [HistorialController::class, 'print_historial'])
     ->name('admin.historial.print_historial')
     ->middleware('auth','can:admin.historial.print_historial');
 

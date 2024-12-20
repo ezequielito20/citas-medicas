@@ -167,8 +167,16 @@ class HistorialController extends Controller
 
     public function print_historial($id)
     {
-        $historial = Historial::findOrFail($id);
-        return view('admin.historial.print_historial', compact('historial'));
+        $patient = Patient::with(['historial' => function($query) {
+            $query->with('doctor')
+                  ->orderBy('visit_date', 'desc');
+        }])->findOrFail($id);
+
+        $configuration = Configuration::latest()->first();
+        
+        $pdf = \PDF::loadView('admin.historial.print_historial', compact('configuration', 'patient'));
+        
+        return $pdf->stream('historial-' . $patient->ci . '.pdf');
     }
 
     
