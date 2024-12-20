@@ -275,6 +275,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <p>Listado de Historiales</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('historial/search_patient') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Buscar Paciente</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         @endcan

@@ -264,6 +264,10 @@ Route::get('/historial', [HistorialController::class, 'index'])
     ->name('admin.historial.index')
     ->middleware('auth','can:admin.historial.index');
 
+Route::get('/historial/search_patient', [HistorialController::class, 'search_patient'])
+    ->name('admin.historial.search_patient')
+    ->middleware('auth', 'can:admin.historial.search_patient');
+
 Route::get('/historial/create', [HistorialController::class, 'create'])
     ->name('admin.historial.create')
     ->middleware('auth','can:admin.historial.create');
@@ -283,7 +287,7 @@ Route::get('/historial/{id}', [HistorialController::class, 'show'])
 Route::get('/historial/{id}/edit', [HistorialController::class, 'edit'])
     ->name('admin.historial.edit')
     ->middleware('auth','can:admin.historial.edit');
-
+    
 Route::put('/historial/{id}', [HistorialController::class, 'update'])
     ->name('admin.historial.update')
     ->middleware('auth','can:admin.historial.update');
@@ -291,6 +295,11 @@ Route::put('/historial/{id}', [HistorialController::class, 'update'])
 Route::get('/historial/{id}/delete', [HistorialController::class, 'destroy'])
     ->name('admin.historial.destroy')
     ->middleware('auth','can:admin.historial.destroy');
+
+
+Route::put('/historial/patient/{id}', [HistorialController::class, 'print_historial'])
+    ->name('admin.historial.print_historial')
+    ->middleware('auth','can:admin.historial.print_historial');
 
 //Reportes de reservaciones -----------------------
 Route::get('/reservations/pdf', [EventController::class, 'pdf'])

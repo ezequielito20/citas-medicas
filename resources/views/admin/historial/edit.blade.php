@@ -76,7 +76,7 @@
 
                 <div class="mt-4">
                     <button type="submit" class="btn btn-primary">Actualizar</button>
-                    <a href="{{ url('historial') }}" class="btn btn-secondary">Cancelar</a>
+                    <a href="javascript:history.back()" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

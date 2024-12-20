@@ -164,4 +164,40 @@ class HistorialController extends Controller
 
         return $pdf->stream();
     }
+
+    public function print_historial($id)
+    {
+        $historial = Historial::findOrFail($id);
+        return view('admin.historial.print_historial', compact('historial'));
+    }
+
+    
+
+    public function search_patient(Request $request)
+    {
+        $patients = null;
+
+        if ($request->filled(['ci']) || $request->filled(['names']) || $request->filled(['last_names'])) {
+            $query = Patient::query();
+
+            if ($request->filled('ci')) {
+                $query->where('ci', 'like', '%' . $request->ci . '%');
+            }
+
+            if ($request->filled('names')) {
+                $query->where('names', 'like', '%' . $request->names . '%');
+            }
+
+            if ($request->filled('last_names')) {
+                $query->where('last_names', 'like', '%' . $request->last_names . '%');
+            }
+
+            $patients = $query->with(['historial' => function($query) {
+                $query->with('doctor')
+                      ->orderBy('visit_date', 'desc');
+            }])->get();
+        }
+
+        return view('admin.historial.search_patient', compact('patients'));
+    }
 }

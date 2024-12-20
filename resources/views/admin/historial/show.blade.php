@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <a href="{{ url('historial') }}" class="btn btn-secondary">Volver</a>
+            <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
         </div>
     </div>
 @endsection() 

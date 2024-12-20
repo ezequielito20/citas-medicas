@@ -107,7 +107,7 @@
                 </div>
                 
                 {{-- <button type="submit" class="btn btn-primary">Crear</button> --}}
-                <a href="{{ url('doctors') }}" class="btn btn-secondary">Cancelar</a>
+                <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
             {{-- </form> --}}
         </div>
     </div>
