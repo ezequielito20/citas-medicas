@@ -13,6 +13,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\SecretaryController;
 use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\PaymentController;
 
 Auth::routes();
 Route::get('/logout', [AdminController::class, 'logout'])
@@ -308,3 +309,41 @@ Route::get('/reservations/pdf', [EventController::class, 'pdf'])
 Route::get('/reservations/reports', [EventController::class, 'reports'])
     ->name('admin.reservations.reports')
     ->middleware('auth','can:admin.reservations.reports');
+
+// rutas para el admin - payments--------------------
+Route::get('/payments', [PaymentController::class, 'index'])
+    ->name('admin.payments.index')
+    ->middleware('auth','can:admin.payments.index');
+
+Route::get('/payments/create', [PaymentController::class, 'create'])
+    ->name('admin.payments.create')
+    ->middleware('auth','can:admin.payments.create');
+
+Route::post('/payments/create', [PaymentController::class, 'store'])
+    ->name('admin.payments.store')
+    ->middleware('auth','can:admin.payments.store');
+
+Route::get('/payments/{id}', [PaymentController::class, 'show'])
+    ->name('admin.payments.show')
+    ->middleware('auth','can:admin.payments.show');
+
+Route::get('/payments/{id}/edit', [PaymentController::class, 'edit'])
+    ->name('admin.payments.edit')
+    ->middleware('auth','can:admin.payments.edit');
+
+Route::put('/payments/{id}', [PaymentController::class, 'update'])
+    ->name('admin.payments.update')
+    ->middleware('auth','can:admin.payments.update');
+
+Route::get('/payments/{id}/delete', [PaymentController::class, 'destroy'])
+    ->name('admin.payments.destroy')
+    ->middleware('auth','can:admin.payments.destroy');
+
+//Reportes de pagos -----------------------
+Route::get('/payments/pdf', [PaymentController::class, 'pdf'])
+    ->name('admin.payments.pdf')
+    ->middleware('auth','can:admin.payments.pdf');
+
+Route::get('/payments/reports', [PaymentController::class, 'reports'])
+    ->name('admin.payments.reports')
+    ->middleware('auth','can:admin.payments.reports');
