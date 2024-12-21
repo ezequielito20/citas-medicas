@@ -10,10 +10,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\SecretaryController;
 use App\Http\Controllers\ConfigurationController;
-use App\Http\Controllers\PaymentController;
 
 Auth::routes();
 Route::get('/logout', [AdminController::class, 'logout'])
@@ -319,6 +319,14 @@ Route::get('/payments/create', [PaymentController::class, 'create'])
     ->name('admin.payments.create')
     ->middleware('auth','can:admin.payments.create');
 
+
+
+Route::get('/payments/report-pdf', [PaymentController::class, 'pdfReport'])->name('admin.payments.report.pdf')->middleware('auth','can:admin.payments.report.pdf');
+
+Route::get('/payments/reports', [PaymentController::class, 'reports'])
+    ->name('admin.payments.reports')
+    ->middleware('auth','can:admin.payments.reports');
+    
 Route::post('/payments/create', [PaymentController::class, 'store'])
     ->name('admin.payments.store')
     ->middleware('auth','can:admin.payments.store');
@@ -339,11 +347,12 @@ Route::get('/payments/{id}/delete', [PaymentController::class, 'destroy'])
     ->name('admin.payments.destroy')
     ->middleware('auth','can:admin.payments.destroy');
 
-//Reportes de pagos -----------------------
-Route::get('/payments/pdf', [PaymentController::class, 'pdf'])
-    ->name('admin.payments.pdf')
-    ->middleware('auth','can:admin.payments.pdf');
+// Ruta para PDF individual de un pago
+Route::get('/payments/{id}/pdf', [PaymentController::class, 'pdfIndividual'])->name('admin.payments.pdf') ->middleware('auth','can:admin.payments.pdf');
 
-Route::get('/payments/reports', [PaymentController::class, 'reports'])
-    ->name('admin.payments.reports')
-    ->middleware('auth','can:admin.payments.reports');
+// Ruta para PDF de reportes
+
+
+
+
+
