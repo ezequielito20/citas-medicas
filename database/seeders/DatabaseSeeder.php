@@ -59,16 +59,19 @@ class DatabaseSeeder extends Seeder
             $user->assignRole('patient');
         });
         SecretaryFactory::times(10)->create();
-        OfficeFactory::times(20)->create();
+        $this->call([
+            OfficeSeeder::class,
+        ]);
         DoctorFactory::times(12)->create();
-        HourFactory::times(25)->create();
 
         $this->call([
             ConfigurationSeeder::class,
             PaymentSeeder::class,
             EventSeeder::class,
             HistorialSeeder::class,
+            HourSeeder::class,
         ]);
+        
 
         
 

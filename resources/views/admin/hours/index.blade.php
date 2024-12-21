@@ -154,7 +154,7 @@
                 <div class="form-group">
                     <select class="form-control" id="office_select" name="office_id">
                         <option value="" disabled selected>Selecciona un consultorio</option>
-                        @foreach ($offices as $office)
+                        @foreach ($offices->where('status', 'activo') as $office)
                             <option value="{{ $office->id }}" {{ old('office_id') == $office->id ? 'selected' : '' }}>
                                 {{ $office->name }} ({{ $office->address }})
                             </option>

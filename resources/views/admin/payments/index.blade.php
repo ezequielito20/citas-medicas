@@ -37,7 +37,7 @@
                     @foreach ($payments as $payment)
                         <tr>
                             <th scope="row" style="text-align: center;">{{ $cont++ }}</th>
-                            <td>{{ $payment->patient->names }} {{ $payment->patient->last_names }}</td>
+                            <td>{{ $payment->patient->names }} {{ $payment->patient->last_names }} / {{ $payment->patient->ci }}</td>
                             <td>{{ $payment->doctor->names }} {{ $payment->doctor->last_names }}</td>
                             <td>{{ number_format($payment->amount, 2) }}</td>
                             <td>{{ $payment->payment_date->format('d/m/Y') }}</td>

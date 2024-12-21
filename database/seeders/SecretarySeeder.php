@@ -12,6 +12,6 @@ class SecretarySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        
     }
 }

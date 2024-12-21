@@ -23,7 +23,20 @@ class DoctorFactory extends Factory
             'last_names' => $this->faker->lastName(),
             'phone' => $this->faker->phoneNumber(),
             'medical_leave' => $this->faker->sentence(4),
-            'specialization' => $this->faker->word(),
+            'specialization' => $this->faker->randomElement([
+                'Cardiología',
+                'Pediatría', 
+                'Dermatología',
+                'Neurología',
+                'Ginecología',
+                'Oftalmología',
+                'Traumatología',
+                'Psiquiatría',
+                'Odontología',
+                'Medicina General',
+                'Endocrinología',
+                'Otorrinolaringología'
+            ]),
             'user_id' => User::inRandomOrder()->first()->id,
             'office_id' => Office::inRandomOrder()->first()->id,
 

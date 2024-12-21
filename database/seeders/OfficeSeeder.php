@@ -12,6 +12,6 @@ class OfficeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\Office::factory(25)->create();
     }
 }

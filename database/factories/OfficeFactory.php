@@ -17,12 +17,12 @@ class OfficeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'address' => $this->faker->address(),
-            'capacity' => $this->faker->numberBetween(1, 20),
-            'phone' => $this->faker->phoneNumber(),
-            'specialization' => $this->faker->word(),
-            'status' => $this->faker->randomElement(['activo', 'inactivo'])
+            'name' => 'Consultorio-' . fake()->unique()->numberBetween(1, 100),
+            'address' => fake()->address(),
+            'capacity' => fake()->numberBetween(5, 20) . ' personas',
+            'phone' => fake()->phoneNumber(),
+            'specialization' => fake()->randomElement(['Cardiología', 'Pediatría', 'Dermatología', 'Neurología', 'Ginecología', 'Oftalmología', 'Traumatología', 'Psiquiatría', 'Odontología', 'Medicina General']),
+            'status' => fake()->randomElement(['activo', 'inactivo'])
         ];
     }
 }

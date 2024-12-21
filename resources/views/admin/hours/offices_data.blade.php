@@ -1,4 +1,5 @@
 <div class="card-body">
+    {{ $hours->first()->office->status }} 
     <table style="font-size: 15px; text-align: center;" class="table table-striped table-hover table-sm table-bordered">
         <thead>
             <tr>

@@ -224,7 +224,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas bi bi-wrench-adjustable"></i>
                                 <p>
-                                    Configuraciones
+                                    Datos de la clinica
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -232,7 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <li class="nav-item">
                                     <a href="{{ url('configurations') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Configuraciones</p>
+                                        <p>Datos</p>
                                     </a>
                                 </li>
                             </ul>
