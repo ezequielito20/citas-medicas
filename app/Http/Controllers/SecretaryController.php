@@ -25,8 +25,7 @@ class SecretaryController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        return view('admin.secretaries.create', compact('users'));
+        return view('admin.secretaries.create');
     }
 
     /**
@@ -36,42 +35,46 @@ class SecretaryController extends Controller
     {
         // Validar los datos del formulario
         $validated = $request->validate([
+            // Validación datos de usuario
+            'username' => 'required|string|max:255|unique:users,name',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:5|confirmed',
+            
+            // Validación datos de secretaria
             'name' => 'required|string|max:255',
             'last_names' => 'required|string|max:255',
-            'user_id' => 'required|exists:users,id',
             'ci' => 'required|string|max:20|unique:secretaries,ci',
             'phone' => 'nullable|string|max:20',
             'birthdate' => 'nullable|date',
             'address' => 'nullable|string|max:255',
-        ], [
-            'user_id.required' => 'El usuario es obligatorio.',
-            'user_id.exists' => 'El usuario seleccionado no existe.',
         ]);
 
         try {
-            // Crear la secretaria y asociarla al usuario seleccionado
+            // Crear el usuario
+            $user = User::create([
+                'name' => $validated['username'],
+                'email' => $validated['email'],
+                'password' => bcrypt($validated['password']),
+            ]);
+
+            // Crear la secretaria y asociarla al usuario
             Secretary::create([
                 'names' => $validated['name'],
                 'last_names' => $validated['last_names'],
-                'user_id' => $validated['user_id'],  // Asociar el usuario
+                'user_id' => $user->id,
                 'ci' => $validated['ci'],
                 'phone' => $validated['phone'] ?? null,
                 'birthdate' => $validated['birthdate'] ?? null,
                 'address' => $validated['address'] ?? null,
             ]);
 
-            // Obtener el usuario asociado
-            $user = User::find($validated['user_id']);
-
-            // Asignar el rol al usuario
+            // Asignar el rol
             $user->assignRole('secretary');
 
-            // Redirigir con mensaje de éxito
             return redirect()->route('admin.secretaries.index')
                 ->with('message', 'Secretaria creada correctamente.')
                 ->with('icons', 'success');
         } catch (\Exception $e) {
-            // Si ocurre un error, redirigir con mensaje de error
             return redirect()->route('admin.secretaries.create')
                 ->with('message', 'Hubo un problema al crear la secretaria: ' . $e->getMessage())
                 ->with('icons', 'error');

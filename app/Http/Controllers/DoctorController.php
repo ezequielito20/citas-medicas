@@ -30,9 +30,8 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $users = User::all();
         $offices = Office::all();
-        return view('admin.doctors.create', compact('users', 'offices'));
+        return view('admin.doctors.create', compact('offices'));
     }
 
     /**
@@ -42,54 +41,61 @@ class DoctorController extends Controller
     {
         // Validar los datos del formulario
         $validated = $request->validate([
+            // Validación datos de usuario
+            'username' => 'required|string|max:255|unique:users,name',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:5|confirmed',
+            
+            // Validación datos de doctor
             'name' => 'required|string|max:100',
             'last_names' => 'required|string|max:100',
             'phone' => 'nullable|string|max:30',
             'medical_leave' => 'required|string|max:190',
             'specialization' => 'required|string|max:190',
-            'user_id' => [
-                'required',
-                'exists:users,id',
-                Rule::unique('doctors', 'user_id')->ignore($request->id),
-            ],
             'office_id' => 'required|exists:offices,id',
         ], [
+            'username.required' => 'El nombre de usuario es obligatorio.',
+            'username.unique' => 'Este nombre de usuario ya está en uso.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.unique' => 'Este correo electrónico ya está en uso.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'name.required' => 'El nombre es obligatorio.',
             'last_names.required' => 'Los apellidos son obligatorios.',
             'medical_leave.required' => 'La licencia médica es obligatoria.',
             'specialization.required' => 'La especialidad es obligatoria.',
-            'user_id.required' => 'El usuario es obligatorio.',
-            'user_id.exists' => 'El usuario seleccionado no existe.',
             'office_id.required' => 'El consultorio es obligatorio.',
             'office_id.exists' => 'El consultorio seleccionado no existe.',
         ]);
 
         try {
-            // Crear el doctor con los datos validados
+            // Crear el usuario
+            $user = User::create([
+                'name' => $validated['username'],
+                'email' => $validated['email'],
+                'password' => bcrypt($validated['password']),
+            ]);
+
+            // Crear el doctor y asociarlo al usuario
             Doctor::create([
                 'names' => $validated['name'],
                 'last_names' => $validated['last_names'],
                 'phone' => $validated['phone'] ?? null,
                 'medical_leave' => $validated['medical_leave'],
                 'specialization' => $validated['specialization'],
-                'user_id' => $validated['user_id'], // Asociar el usuario
-                'office_id' => $validated['office_id'], // Asociar el consultorio
+                'user_id' => $user->id,
+                'office_id' => $validated['office_id'],
             ]);
 
-            // Obtener el usuario asociado
-            $user = User::find($validated['user_id']);
-
-            // Asignar el rol al usuario
+            // Asignar el rol
             $user->assignRole('doctor');
 
-            // Redirigir con mensaje de éxito
             return redirect()->route('admin.doctors.index')
                 ->with('message', 'Doctor creado correctamente.')
                 ->with('icons', 'success');
         } catch (\Exception $e) {
-            // Si ocurre un error, redirigir con mensaje de error
             return redirect()->route('admin.doctors.create')
-                ->with('message', 'Hubo un problema al crear el doctor.')
+                ->with('message', 'Hubo un problema al crear el doctor: ' . $e->getMessage())
                 ->with('icons', 'error');
         }
     }
