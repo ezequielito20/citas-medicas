@@ -18,7 +18,8 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     Total Pagos</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistics['total_payments'] }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistics['total_payments'] }}
+                                </div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -58,6 +59,27 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
+                                <label for="patient_search">Buscar Paciente</label>
+                                <input type="text" class="form-control" id="patient_search" name="patient_search"
+                                    placeholder="Nombre, apellido o cédula" value="{{ request('patient_search') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="doctor_id">Doctor</label>
+                                <select class="form-control" id="doctor_id" name="doctor_id">
+                                    <option value="">Todos los doctores</option>
+                                    @foreach ($doctors as $doctor)
+                                        <option value="{{ $doctor->id }}"
+                                            {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
+                                            {{ $doctor->names }} {{ $doctor->last_names }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
                                 <label for="start_date">Fecha Inicio</label>
                                 <input type="date" class="form-control" id="start_date" name="start_date"
                                     value="{{ request('start_date') }}">
@@ -70,30 +92,17 @@
                                     value="{{ request('end_date') }}">
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="doctor_id">Doctor</label>
-                                <select class="form-control" id="doctor_id" name="doctor_id">
-                                    <option value="">Todos los doctores</option>
-                                    @foreach($doctors as $doctor)
-                                        <option value="{{ $doctor->id }}" 
-                                            {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
-                                            {{ $doctor->names }} {{ $doctor->last_names }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>&nbsp;</label>
-                                <div>
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-search"></i> Buscar
-                                    </button>
-                                    <a href="{{ route('admin.payments.reports') }}" class="btn btn-secondary">
-                                        <i class="fas fa-broom"></i> Limpiar
-                                    </a>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Buscar
+                                        </button>
+                                        <a href="{{ route('admin.payments.reports') }}" class="btn btn-secondary">
+                                            <i class="fas fa-broom"></i> Limpiar
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +138,7 @@
                             @forelse($payments as $payment)
                                 <tr>
                                     <td>{{ $payment->payment_date->format('d/m/Y') }}</td>
-                                    <td>{{ $payment->patient->names }} {{ $payment->patient->last_names }}</td>
+                                    <td>{{ $payment->patient->names }} {{ $payment->patient->last_names }} / {{ $payment->patient->ci }}</td>
                                     <td>{{ $payment->doctor->names }} {{ $payment->doctor->last_names }}</td>
                                     <td>${{ number_format($payment->amount, 2) }}</td>
                                     <td>{{ $payment->description }}</td>

@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use App\Models\Configuration;
 use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Auth;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 
 
 class PaymentController extends Controller
@@ -136,7 +135,7 @@ class PaymentController extends Controller
     {
         $doctors = Doctor::orderBy('names')->get();
         
-        $query = Payment::with(['patient', 'doctor']);
+        $query = Payment::with(['patient', 'doctor'])->orderBy('payment_date', 'desc');
 
         // Aplicar filtros si existen
         if (request('start_date')) {
@@ -147,6 +146,18 @@ class PaymentController extends Controller
         }
         if (request('doctor_id')) {
             $query->where('doctor_id', request('doctor_id'));
+        }
+
+        // Agregar filtro de búsqueda de paciente
+        if (request('patient_search')) {
+            $searchTerm = request('patient_search');
+            $query->whereHas('patient', function($q) use ($searchTerm) {
+                $q->where(function($query) use ($searchTerm) {
+                    $query->where('names', 'LIKE', "%{$searchTerm}%")
+                          ->orWhere('last_names', 'LIKE', "%{$searchTerm}%")
+                          ->orWhere('ci', 'LIKE', "%{$searchTerm}%");
+                });
+            });
         }
 
         $payments = $query->latest('payment_date')->get();
@@ -202,19 +213,23 @@ class PaymentController extends Controller
             $query->where('doctor_id', request('doctor_id'));
         }
 
+        // Agregar filtro de búsqueda de paciente
+        if (request('patient_search')) {
+            $searchTerm = request('patient_search');
+            $query->whereHas('patient', function($q) use ($searchTerm) {
+                $q->where(function($query) use ($searchTerm) {
+                    $query->where('names', 'LIKE', "%{$searchTerm}%")
+                          ->orWhere('last_names', 'LIKE', "%{$searchTerm}%")
+                          ->orWhere('ci', 'LIKE', "%{$searchTerm}%");
+                });
+            });
+        }
+
         $payments = $query->latest('payment_date')->get();
         $configuration = Configuration::latest()->first();
 
         // Crear el texto para el QR con todos los pagos
         $data = "Reporte de pagos generado el " . Carbon::now()->format('d/m/Y H:i:s') . "\n\n";
-        
-        // foreach($payments as $payment) {
-        //     $data .= "================================\n";
-        //     $data .= "Comprobante de pago del paciente: " . $payment->patient->names . " " . $payment->patient->last_names . "\n";
-        //     $data .= "Fecha: " . $payment->payment_date->format('d/m/Y') . "\n";
-        //     $data .= "Monto: $" . number_format($payment->amount, 2) . "\n";
-        //     $data .= "Descripción: " . $payment->description . "\n";
-        // }
         
         $data .= "-------- Datos del reporte ------\n";
         $data .= "Total pagos: " . $payments->count() . "\n";
@@ -226,7 +241,7 @@ class PaymentController extends Controller
         $data .= "Generado por: " . Auth::user()->name . "\n";
         $data .= "Clinica: " . $configuration->name . "\n";
         $data .= "----------------------------------\n";
-        // dd($data);
+
         // Generar el QR Code
         $qrCode = new QrCode($data);
         $writer = new PngWriter();
@@ -240,7 +255,6 @@ class PaymentController extends Controller
         $canvas = $dompdf->getCanvas();
         
         $canvas->page_text(20, 800, "Impreso por: " . Auth::user()->name, null, 10, array(0,0,0));
-        // $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
         $canvas->page_text(450, 800, "Fecha: " . Carbon::now()->format('d/m/Y')." ". Carbon::now()->format('H:i:s'), null, 10, array(0,0,0));
 
         return $pdf->stream('reporte-pagos.pdf');
