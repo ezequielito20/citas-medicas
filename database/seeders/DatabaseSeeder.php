@@ -13,6 +13,8 @@ use Database\Factories\OfficeFactory;
 use Database\Factories\PatientFactory;
 use Database\Factories\SecretaryFactory;
 use Spatie\Permission\Models\Permission;
+use Database\Seeders\ConfigurationSeeder;
+use Database\Seeders\HistorialSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -60,6 +62,13 @@ class DatabaseSeeder extends Seeder
         OfficeFactory::times(20)->create();
         DoctorFactory::times(12)->create();
         HourFactory::times(25)->create();
+
+        $this->call([
+            ConfigurationSeeder::class,
+            PaymentSeeder::class,
+            EventSeeder::class,
+            HistorialSeeder::class,
+        ]);
 
         
 

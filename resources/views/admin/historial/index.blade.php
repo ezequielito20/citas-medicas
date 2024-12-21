@@ -22,7 +22,7 @@
                 <thead>
                     <tr>
                         <th scope="col" style="text-align: center;">#</th>
-                        <th scope="col" style="text-align: center;">Paciente</th>
+                        <th scope="col" style="text-align: center;">Paciente/Cedula</th>
                         <th scope="col" style="text-align: center;">Doctor</th>
                         <th scope="col" style="text-align: center;">Detalle de la Cita</th>
                         <th scope="col" style="text-align: center;">Fecha de Visita</th>
@@ -37,7 +37,7 @@
                         @if ($historial->doctor_id == auth()->user()->doctor->id || auth()->user()->hasRole('admin'))
                             <tr>
                                 <th scope="row" style="text-align: center;">{{ $cont++ }}</th>
-                                <td>{{ $historial->patient->names }} {{ $historial->patient->last_names }}</td>
+                                <td>{{ $historial->patient->names }} {{ $historial->patient->last_names }} / {{ $historial->patient->ci }}</td>
                                 <td>{{ $historial->doctor->names }} {{ $historial->doctor->last_names }}</td>
                                 <td >{{ \Illuminate\Support\Str::limit($historial->detail, 100, '...') }}</td>
                                 <td>{{ $historial->visit_date }}</td>
