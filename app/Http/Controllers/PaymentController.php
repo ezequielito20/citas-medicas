@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
-use App\Models\Patient;
-use App\Models\Doctor;
-use App\Models\Configuration;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use PDF;
 use Carbon\Carbon;
+use App\Models\Doctor;
+use App\Models\Patient;
+use App\Models\Payment;
+use Endroid\QrCode\QrCode;
+use Illuminate\Http\Request;
+use App\Models\Configuration;
+use Endroid\QrCode\Writer\PngWriter;
+use Illuminate\Support\Facades\Auth;
+
 
 class PaymentController extends Controller
 {
@@ -159,16 +162,25 @@ class PaymentController extends Controller
     public function pdfIndividual($id)
     {
         $payments = Payment::with(['patient', 'doctor'])->where('id', $id)->get();
+        // dd($payments);
         $configuration = Configuration::latest()->first();
         
-        $pdf = \PDF::loadView('admin.payments.pdf', compact('payments', 'configuration'));
+        $payment = $payments->first();
+        $data = "Codigo de seguridad del comprobante de pago del paciente: ".$payment->patient->names." ".$payment->patient->last_names." en la fecha ".$payment->payment_date." por el monto de ".$payment->amount;
+
+        // // Generar el QR Code
+        $qrCode = new QrCode($data);
+        $writer = new PngWriter();
+        $result = $writer->write($qrCode);
+        $qrCodeBase64    = base64_encode($result->getString());
+
+        $pdf = \PDF::loadView('admin.payments.pdf', compact('payments', 'configuration', 'data', 'qrCodeBase64'));
         
         $pdf->output();
         $dompdf = $pdf->getDomPDF();
         $canvas = $dompdf->getCanvas();
         
         $canvas->page_text(20, 800, "Impreso por: " . Auth::user()->name, null, 10, array(0,0,0));
-        $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
         $canvas->page_text(450, 800, "Fecha: " . Carbon::now()->format('d/m/Y')." ". Carbon::now()->format('H:i:s'), null, 10, array(0,0,0));
 
         return $pdf->stream('pago-'.$id.'.pdf');

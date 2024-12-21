@@ -4,63 +4,158 @@
     <meta charset="UTF-8">
     <title>Reporte de Pagos</title>
     <style>
+        @page {
+            margin: 3cm 2cm 3cm 2cm;
+        }
         body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
+            font-family: 'Helvetica', sans-serif;
+            color: #2D3748;
+            line-height: 1.6;
         }
         .header {
-            text-align: center;
-            margin-bottom: 20px;
+            position: fixed;
+            top: -2cm;
+            left: 0;
+            right: 0;
+            height: 2cm;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 20px;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+        }
+        .logo-container {
+            float: left;
+            width: 20%;
         }
         .logo {
-            max-width: 100px;
-            margin-bottom: 10px;
+            max-height: 60px;
+            object-fit: contain;
         }
         .company-info {
-            margin-bottom: 15px;
+            float: right;
+            width: 40%;
+            text-align: right;
+            font-size: 9pt;
+            color: #4A5568;
+        }
+        .report-title {
+            text-align: center;
+            font-size: 24pt;
+            color: #2B6CB0;
+            margin: 20px 0;
+            clear: both;
+        }
+        .period-info {
+            text-align: center;
+            font-size: 10pt;
+            color: #718096;
+            margin-bottom: 30px;
         }
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        .table th, .table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+            margin: 25px 0;
+            font-size: 9pt;
         }
         .table th {
-            background-color: #f8f9fa;
+            background-color: #EBF8FF;
+            color: #2C5282;
+            font-weight: bold;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #BEE3F8;
+        }
+        .table td {
+            padding: 10px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .table tr:nth-child(even) {
+            background-color: #F7FAFC;
+        }
+        .total-section {
+            margin-top: 30px;
+            text-align: right;
+            padding: 15px;
+            background-color: #F7FAFC;
+            border-radius: 5px;
+        }
+        .total-amount {
+            font-size: 14pt;
+            color: #2B6CB0;
+            font-weight: bold;
+        }
+        .security-section {
+            position: fixed;
+            bottom: 2cm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .qr-wrapper {
+            display: inline-block;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        .qr-code {
+            width: 80px;
+            height: 80px;
+        }
+        .security-text {
+            font-size: 7pt;
+            color: #718096;
+            margin-top: 5px;
         }
         .footer {
             position: fixed;
-            bottom: 0;
-            width: 100%;
-            font-size: 9px;
+            bottom: -2cm;
+            left: 0;
+            right: 0;
+            height: 1cm;
             text-align: center;
-            padding: 10px 0;
+            font-size: 8pt;
+            color: #718096;
+            border-top: 1px solid #E2E8F0;
+            padding-top: 10px;
         }
-        .total {
-            margin-top: 20px;
+        .page-number {
+            font-size: 8pt;
+            color: #A0AEC0;
             text-align: right;
-            font-weight: bold;
+        }
+        .amount-cell {
+            text-align: right;
+            font-family: 'Courier New', monospace;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="{{ public_path('storage/' . $configuration->logo) }}" alt="Logo" class="logo">
-        <div class="company-info">
-            <h2>{{ $configuration->name }}</h2>
-            <p>{{ $configuration->address }}</p>
-            <p>Tel: {{ $configuration->phone }} | Email: {{ $configuration->email }}</p>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="{{ public_path('storage/' . $configuration->logo) }}" alt="Logo" class="logo">
+            </div>
+            <div class="company-info">
+                <strong>{{ $configuration->name }}</strong><br>
+                {{ $configuration->address }}<br>
+                Tel: {{ $configuration->phone }}<br>
+                {{ $configuration->email }}
+            </div>
         </div>
-        <h1>Reporte de Pagos</h1>
-        @if(request('start_date') && request('end_date'))
-            <p>Período: {{ date('d/m/Y', strtotime(request('start_date'))) }} - 
-               {{ date('d/m/Y', strtotime(request('end_date'))) }}</p>
-        @endif
     </div>
+
+    <div class="report-title">Reporte de Pagos</div>
+    
+    @if(request('start_date') && request('end_date'))
+    <div class="period-info">
+        Período del {{ date('d/m/Y', strtotime(request('start_date'))) }} 
+        al {{ date('d/m/Y', strtotime(request('end_date'))) }}
+    </div>
+    @endif
 
     <table class="table">
         <thead>
@@ -68,30 +163,45 @@
                 <th>Fecha</th>
                 <th>Paciente</th>
                 <th>Doctor</th>
-                <th>Monto</th>
                 <th>Descripción</th>
+                <th>Monto</th>
             </tr>
         </thead>
         <tbody>
             @foreach($payments as $payment)
-                <tr>
-                    <td>{{ $payment->payment_date->format('d/m/Y') }}</td>
-                    <td>{{ $payment->patient->names }} {{ $payment->patient->last_names }}</td>
-                    <td>{{ $payment->doctor->names }} {{ $payment->doctor->last_names }}</td>
-                    <td>${{ number_format($payment->amount, 2) }}</td>
-                    <td>{{ $payment->description }}</td>
-                </tr>
+            <tr>
+                <td>{{ $payment->payment_date->format('d/m/Y') }}</td>
+                <td>{{ $payment->patient->names }} {{ $payment->patient->last_names }}</td>
+                <td>{{ $payment->doctor->names }}</td>
+                <td>{{ $payment->description }}</td>
+                <td class="amount-cell">${{ number_format($payment->amount, 2) }}</td>
+            </tr>
             @endforeach
         </tbody>
     </table>
 
-    <div class="total">
-        Total Recaudado: ${{ number_format($payments->sum('amount'), 2) }}
+    <div class="total-section">
+        <span>Total Recaudado: </span>
+        <span class="total-amount">${{ number_format($payments->sum('amount'), 2) }}</span>
+    </div>
+
+    <div class="security-section">
+        <div class="qr-wrapper">
+            <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="Código QR" class="qr-code">
+            <div class="security-text">
+                Código de Verificación Digital<br>
+                {{ now()->format('d/m/Y H:i:s') }}
+            </div>
+        </div>
     </div>
 
     <div class="footer">
-        <p>Fecha de generación: {{ now()->format('d/m/Y H:i:s') }}</p>
-        <p>Este es un documento generado automáticamente.</p>
+        Documento generado automáticamente por el sistema<br>
+        {{ $configuration->name }} © {{ date('Y') }}
+    </div>
+
+    <div class="page-number">
+        Página {PAGE_NUM} de {PAGE_COUNT}
     </div>
 </body>
 </html>
