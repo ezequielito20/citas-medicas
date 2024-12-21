@@ -124,7 +124,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: url('{{ asset('img/medical-bg.jpg') }}') no-repeat center center;
+        background: url('{{ asset('dist/img/photo1.png') }}') no-repeat center center;
         background-size: cover;
         position: relative;
     }
