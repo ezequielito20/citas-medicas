@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Configuration;
 use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Auth;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 
 
 class PaymentController extends Controller
@@ -168,7 +169,7 @@ class PaymentController extends Controller
         $payment = $payments->first();
         $data = "Codigo de seguridad del comprobante de pago del paciente: ".$payment->patient->names." ".$payment->patient->last_names." en la fecha ".$payment->payment_date." por el monto de ".$payment->amount;
 
-        // // Generar el QR Code
+        // Generar el QR Code
         $qrCode = new QrCode($data);
         $writer = new PngWriter();
         $result = $writer->write($qrCode);
@@ -203,15 +204,43 @@ class PaymentController extends Controller
 
         $payments = $query->latest('payment_date')->get();
         $configuration = Configuration::latest()->first();
+
+        // Crear el texto para el QR con todos los pagos
+        $data = "Reporte de pagos generado el " . Carbon::now()->format('d/m/Y H:i:s') . "\n\n";
         
-        $pdf = \PDF::loadView('admin.payments.pdf', compact('payments', 'configuration'));
+        // foreach($payments as $payment) {
+        //     $data .= "================================\n";
+        //     $data .= "Comprobante de pago del paciente: " . $payment->patient->names . " " . $payment->patient->last_names . "\n";
+        //     $data .= "Fecha: " . $payment->payment_date->format('d/m/Y') . "\n";
+        //     $data .= "Monto: $" . number_format($payment->amount, 2) . "\n";
+        //     $data .= "Descripción: " . $payment->description . "\n";
+        // }
+        
+        $data .= "-------- Datos del reporte ------\n";
+        $data .= "Total pagos: " . $payments->count() . "\n";
+        $data .= "Monto total: $" . number_format($payments->sum('amount'), 2) . "\n";
+        $data .= "Doctores involucrados:\n";
+        foreach($payments->pluck('doctor')->unique() as $doctor) {
+            $data .= "- Dr(a). " . $doctor->names . " " . $doctor->last_names . "\n";
+        }
+        $data .= "Generado por: " . Auth::user()->name . "\n";
+        $data .= "Clinica: " . $configuration->name . "\n";
+        $data .= "----------------------------------\n";
+        // dd($data);
+        // Generar el QR Code
+        $qrCode = new QrCode($data);
+        $writer = new PngWriter();
+        $result = $writer->write($qrCode);
+        $qrCodeBase64 = base64_encode($result->getString());
+
+        $pdf = \PDF::loadView('admin.payments.pdf', compact('payments', 'configuration', 'qrCodeBase64'));
         
         $pdf->output();
         $dompdf = $pdf->getDomPDF();
         $canvas = $dompdf->getCanvas();
         
         $canvas->page_text(20, 800, "Impreso por: " . Auth::user()->name, null, 10, array(0,0,0));
-        $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
+        // $canvas->page_text(270, 800, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 10, array(0,0,0));
         $canvas->page_text(450, 800, "Fecha: " . Carbon::now()->format('d/m/Y')." ". Carbon::now()->format('H:i:s'), null, 10, array(0,0,0));
 
         return $pdf->stream('reporte-pagos.pdf');

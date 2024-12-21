@@ -87,28 +87,21 @@
             font-weight: bold;
         }
         .security-section {
-            position: fixed;
-            bottom: 2cm;
-            left: 0;
-            right: 0;
             text-align: center;
-            padding: 20px 0;
+            margin-top: 20px;
+            page-break-inside: avoid;
         }
         .qr-wrapper {
             display: inline-block;
-            padding: 10px;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border-radius: 4px;
         }
         .qr-code {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
         }
         .security-text {
-            font-size: 7pt;
-            color: #718096;
+            font-size: 8pt;
             margin-top: 5px;
+            color: #666;
         }
         .footer {
             position: fixed;
@@ -130,6 +123,29 @@
         .amount-cell {
             text-align: right;
             font-family: 'Courier New', monospace;
+        }
+        .qr-container {
+            position: fixed;
+            bottom: 100px;  /* Ajusta según necesites */
+            right: 50px;    /* Ajusta según necesites */
+            text-align: center;
+        }
+        /* Clase especial para el QR que solo aparece en la última página */
+        .last-page-only {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            visibility: hidden;
+        }
+        /* Esta regla CSS hace visible el contenido solo en la última página */
+        @page :last {
+            .last-page-only {
+                visibility: visible;
+            }
+            .security-section {
+                visibility: visible;
+            }
         }
     </style>
 </head>
@@ -185,12 +201,14 @@
         <span class="total-amount">${{ number_format($payments->sum('amount'), 2) }}</span>
     </div>
 
-    <div class="security-section">
-        <div class="qr-wrapper">
-            <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="Código QR" class="qr-code">
-            <div class="security-text">
-                Código de Verificación Digital<br>
-                {{ now()->format('d/m/Y H:i:s') }}
+    <div style="page-break-inside: avoid;">
+        <div class="security-section">
+            <div class="qr-wrapper">
+                <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="Código QR" class="qr-code">
+                <div class="security-text">
+                    Código de Verificación Digital<br>
+                    {{ now()->format('d/m/Y H:i:s') }}
+                </div>
             </div>
         </div>
     </div>
@@ -201,7 +219,9 @@
     </div>
 
     <div class="page-number">
-        Página {PAGE_NUM} de {PAGE_COUNT}
+        {{-- Página {PAGE_NUM} de {PAGE_COUNT} --}}
     </div>
+    
+    
 </body>
 </html>
