@@ -36,6 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <script src="{{ asset('fullcalendar/es.global.js') }}"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
